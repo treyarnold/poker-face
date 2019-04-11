@@ -1,0 +1,21 @@
+function to deal the cards
+>on each deal, rotate playerNumber
+increment playercardnumber by 1
+when all player handcardnumbers == 2 stop,
+
+function to bet/check
+if bet === 0 
+show check button show bet button
+else show call button show fold button
+if check button pass turn
+if bet button
+	increase currentBet by x
+
+
+
+
+function to assess hand values and compare for victory conditions
+
+function to reset the deck
+
+function tooooo
