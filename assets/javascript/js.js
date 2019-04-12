@@ -22,4 +22,12 @@ connectedRef.on("value", snapshot => { //assign user IDs
         });
     }
 });
-
+apiKey = '1a8efd59c4b5cb5e177aea595dc217c32b578bb3d681940bb9c01a4bf5cc0919'
+const QueryUrl = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${breed}&limit=8&offset=0&lang=en`;
+$.ajax({
+    url: QueryUrl,
+    methodf: "GET"
+}).then(function (response) {
+    var callBack = response.data;
+    console.log(response);
+});
