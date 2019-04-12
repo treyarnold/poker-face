@@ -22,8 +22,9 @@ connectedRef.on("value", snapshot => { //assign user IDs
         });
     }
 });
-apiKey = '1a8efd59c4b5cb5e177aea595dc217c32b578bb3d681940bb9c01a4bf5cc0919'
-const QueryUrl = `QUERY URL`;
+const pagereturn = 1
+let query = 'dogs'
+const QueryUrl = `https://api.unsplash.com/search/photos?page=${pagereturn}&query=${query}&client_id=1a8efd59c4b5cb5e177aea595dc217c32b578bb3d681940bb9c01a4bf5cc0919`;
 $.ajax({
     url: QueryUrl,
     methodf: "GET"
