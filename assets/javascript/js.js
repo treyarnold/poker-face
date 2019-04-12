@@ -13,7 +13,7 @@ const connectionRef = DB.ref("/players")
 const connectedRef = DB.ref(".info/connected")
 const gameState = DB.ref("gameState");
 
-connectedRef.on("value", snapshot => {
+connectedRef.on("value", snapshot => { //assign user IDs
     if (snapshot.val()) {
         const connection = connectionRef.push(true);
         game.localID = connection.key;
@@ -23,5 +23,3 @@ connectedRef.on("value", snapshot => {
     }
 });
 
-//Unsplash ajax call
-//
