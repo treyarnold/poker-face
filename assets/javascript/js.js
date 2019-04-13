@@ -34,12 +34,33 @@ $.ajax({
     var callBack = response.data;
     console.log(response);
 });
+function game() {            //the whole game box, functions first then all the logic yeah?   
+    const playerHand = ['']
+    const smallBlind = 2;
+    const bigBlind = 4;
+    const potTotal = 0;
+    const playerCardCount = 0;
+    const playerPot = 0
+    for (i = 0; i <= connectedRef; i++) //but then these variables will be out of scope to be used by the rest of the game I do be;ieve :l
 
-//deal card function
-playerHand = []
-
-//bet/check function to run as long as cardsbeingDealt === true + 1?
-
-//function to compare hands and select victor
 
 
+
+        //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
+        function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
+            //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
+
+
+
+        }
+
+    function bet() {
+
+    }
+
+    //bet/check function to run as long as cardsbeingDealt === true + 1?
+
+    //function to compare hands and select victor
+
+
+}
