@@ -22,7 +22,17 @@ const potTotal = 0;
 const playerCardCount = 0;
 const playerPot = 0;
 const raiseValue = 0;
-const cardDeck = ['2h', '2s', '2d', '2c', '3h', '3s', '3d', '3c', '4h', '4s', '4d', '4c', '5h', '5s', '5d', '5c', '6h', '6s', '6d', '6c', '7h', '7s', '7d', '7c', '8h', '8s', '8d', '8c', '9h', '9s', '9d', '9c', '10h', '10s', '10d', '10c', 'jh', 'js', 'jd', 'jc', 'qh', 'qs', 'qd', 'qc', 'kh', 'ks', 'kd', 'kc', 'ah', 'as', 'ad', 'ac',]
+const onePair = 1;
+const twoPair = 2;
+const threeofKind = 3;
+const straight = 4;
+const flush = 5
+const fullHouse = 6
+const straightFlush = 7
+const royalFlush = 8
+const cardDeck = ['2h', '2s', '2d', '2c', '3h', '3s', '3d', '3c', '4h', '4s', '4d', '4c', '5h', '5s', '5d', '5c',
+    '6h', '6s', '6d', '6c', '7h', '7s', '7d', '7c', '8h', '8s', '8d', '8c', '9h', '9s', '9d', '9c', '10h', '10s', '10d', '10c', 'jh',
+    'js', 'jd', 'jc', 'qh', 'qs', 'qd', 'qc', 'kh', 'ks', 'kd', 'kc', 'ah', 'as', 'ad', 'ac',]
 let shuffledDeck = [];
 const config = {
     apiKey: "AIzaSyCw1iDS84Bz7Wk5ifElmdhN1fyQ4LsRALY",
@@ -420,7 +430,8 @@ function game() {            //the whole game box, functions first then all the 
 
     }
     function nextTurn() {
-        //switches active player 
+        //currentPlayer=nextPlayer
+
     }
     function bet() { //fixed in 4s
         if (!playerhand === ['']) {
@@ -461,14 +472,6 @@ function game() {            //the whole game box, functions first then all the 
     }
     //function to compare hands and select victor
     function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
-        const onePair = 1;      //like if letter === letter[i] push to possibleHandArray or som
-        const twoPair = 2;
-        const threeofKind = 3;
-        const straight = 4;
-        const flush = 5
-        const fullHouse = 6
-        const straightFlush = 7
-        const royalFlush = 8
 
     }
     function blindSwitch() {
