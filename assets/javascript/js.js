@@ -54,14 +54,8 @@ function toggleSignIn() {
     document.getElementById('quickstart-sign-in').disabled = true;
     // [END_EXCLUDE]
 }
-// [END buttoncallback]
-/**
- * initApp handles setting up UI event listeners and registering Firebase auth listeners:
- *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
- *    out, and that is where we update the UI.
- *  - firebase.auth().getRedirectResult(): This promise completes when the user gets back from
- *    the auth redirect flow. It is where you can get the OAuth access token from the IDP.
- */
+
+
 function initApp() {
     // Result from Redirect auth flow.
     // [START getidptoken]
@@ -347,7 +341,7 @@ function isUserEqual(facebookAuthResponse, firebaseUser) {
  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
  *    out, and that is where we update the UI.
  */
-function initApp() {
+function initApp3() {
     // Listening for auth state changes.
     // [START authstatelistener]
     firebase.auth().onAuthStateChanged(function (user) {
@@ -374,59 +368,61 @@ function initApp() {
     });
     // [END authstatelistener]
 }
-function game() {            //the whole game box, functions first then all the logic yeah?   
-    const playerHand = ['']
-    const smallBlind = 2;
-    const bigBlind = 4;
-    const potTotal = 0;
-    const playerCardCount = 0;
-    const playerPot = 0;
-    for (i = 0; i <= connectedRef; i++) //but then these variables will be out of scope to be used by the rest of the game I do be;ieve :l
+window.onload = function () {
+    initApp3();
+    function game() {            //the whole game box, functions first then all the logic yeah?   
+        const playerHand = ['']
+        const smallBlind = 2;
+        const bigBlind = 4;
+        const potTotal = 0;
+        const playerCardCount = 0;
+        const playerPot = 0;
+        for (i = 0; i <= connectedRef; i++) //but then these variables will be out of scope to be used by the rest of the game I do be;ieve :l
 
 
 
 
-        //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
-        function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
-            //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
+            //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
+            function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
+                //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
 
 
+
+            }
+
+        function bet() { //how will user bet be inputted? should it be fixed or with an input box with parameters? 
+            //add bet value to pottotal, subtract from player total 
+        };
+        function check() {
+            //if bet value === 0
+            //move to next player
+        };
+        //bet/check function to run as long as cardsbeingDealt === true + 1?
+        function fold() {
+            playerhand = [''];
+        };
+
+        function call() {
+            //add bet value to pot total, subtract from playertotal
+
+
+        };
+        //function to compare hands and select victor
+        function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
+            const onePair = 1;      //like if letter === letter[i] push to possibleHandArray or som
+            const twoPair = 2;
+            const threeofKind = 3;
+            const straight = 4;
+            const flush = 5
+            const fullHouse = 6
+            const straightFlush = 7
+            const royalFlush = 8
 
         }
+        function blindSwitch() {
 
-    function bet() { //how will user bet be inputted? should it be fixed or with an input box with parameters? 
-        //add bet value to pottotal, subtract from player total 
-    };
-    function check() {
-        //if bet value === 0
-        //move to next player
-    };
-    //bet/check function to run as long as cardsbeingDealt === true + 1?
-    function fold() {
-        playerhand = [''];
-    };
-
-    function call() {
-        //add bet value to pot total, subtract from playertotal
-
-
-    };
-    //function to compare hands and select victor
-    function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
-        const onePair = 1;      //like if letter === letter[i] push to possibleHandArray or som
-        const twoPair = 2;
-        const threeofKind = 3;
-        const straight = 4;
-        const flush = 5
-        const fullHouse = 6
-        const straightFlush = 7
-        const royalFlush = 8
-
+            //something to rotate the blinds and dealer (class? ooooo that sounds, like a player.removeClass(smallBlind) player.addClass(bigBlind) or u no)
+        }
+        function newHand() { //a function to set the used deck back to full array and begin the deal function
+        }
     }
-    function blindSwitch() {
-
-        //something to rotate the blinds and dealer (class? ooooo that sounds, like a player.removeClass(smallBlind) player.addClass(bigBlind) or u no)
-    }
-    function newHand() { //a function to set the used deck back to full array and begin the deal function
-    }
-}
