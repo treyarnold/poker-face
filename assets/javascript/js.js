@@ -40,7 +40,7 @@ function game() {            //the whole game box, functions first then all the 
     const bigBlind = 4;
     const potTotal = 0;
     const playerCardCount = 0;
-    const playerPot = 0
+    const playerPot = 0;
     for (i = 0; i <= connectedRef; i++) //but then these variables will be out of scope to be used by the rest of the game I do be;ieve :l
 
 
@@ -54,13 +54,41 @@ function game() {            //the whole game box, functions first then all the 
 
         }
 
-    function bet() {
+    function bet() { //how will user bet be inputted? should it be fixed or with an input box with parameters? 
+        //add bet value to pottotal, subtract from player total 
+    };
+    function check() {
+        //if bet value === 0
+        //move to next player
+    };
+    //bet/check function to run as long as cardsbeingDealt === true + 1?
+    function fold() {
+        playerhand = [''];
+    };
+
+    function call() {
+        //add bet value to pot total, subtract from playertotal
+
+
+    };
+    //function to compare hands and select victor
+    function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
+        const onePair = 1;      //like if letter === letter[i] push to possibleHandArray or som
+        const twoPair = 2;
+        const threeofKind = 3;
+        const straight = 4;
+        const flush = 5
+        const fullHouse = 6
+        const straightFlush = 7
+        const royalFlush = 8
 
     }
+    function blindSwitch() {
 
-    //bet/check function to run as long as cardsbeingDealt === true + 1?
+        //something to rotate the blinds and dealer (class? ooooo that sounds, like a player.removeClass(smallBlind) player.addClass(bigBlind) or u no)
+    }
+    function newHand() { //a function to set the used deck back to full array and begin the deal function
 
-    //function to compare hands and select victor
 
-
+    }
 }
