@@ -490,7 +490,8 @@ function game() {            //the whole game box, functions first then all the 
         //some like if ((value (i) === value other thing for two pair, handValuePlayerNumber=1
 
         //need oike a for loloop to sort thru the deck and assign a value to everything based on numeric value anda class based on suit to be used by the function that calculates the winning hand))
-    }
+    }   //could do something like for cardDeck[i], somehow m[ix4 xponentially (Every 4th iteration in the array).addClass SuitHearts suitDiamonds ect.
+    //do the same thing but [i] [i+12] assign value 2, 3, 4 eect ]
     function blindSwitch() {    //this will just end up as an infinite loop of moving 
         $('#currentSmallBlind').removeClass('smallBlind');
         $('#currentBigBlind').removeClass('bigBlind');
