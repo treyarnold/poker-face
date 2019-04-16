@@ -415,10 +415,13 @@ window.onload = function () {
 //FB.Event.subscribe('auth.authResponseChange', checkLoginState);
 // [END facebookauthlistener]
 // [END_EXCLUDE]
+function deckAssign() {
+    //this will be the for loop that assigns classes and values to the main deck
+}
 function game() {            //the whole game box, functions first then all the logic yeah?   
 
 
-    function nameAssign() { //assigns connected users info to playerName variables
+    function nameAssign() { //assigns connected users info to playerName variables //Instead have the hardcoded variables, on join button adds playername to newplayer
         for (i = 0, i < connectionsRef; i++) {
             Player[i].add('id', player[i]);
         }
@@ -439,8 +442,13 @@ function game() {            //the whole game box, functions first then all the 
         }
 
     }
+    function turnDeal() {
+        //on dealCount = 1, push 3 cards to the tableCards
+        //on dealCount =2/3, push 1 card
+    }
     function nextTurn() {
         //currentPlayer=nextPlayer
+        //turnDeal function
 
     }
     function bet() { //fixed in 4s
@@ -486,7 +494,7 @@ function game() {            //the whole game box, functions first then all the 
         //run hand compare function on chosenHand arrays (a forloop to create a new chosenhand[i] for each player in the hand
     }
     //function to compare hands and select victor
-    function ha ndCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
+    function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
         //some like if ((value (i) === value other thing for two pair, handValuePlayerNumber=1
 
         //need oike a for loloop to sort thru the deck and assign a value to everything based on numeric value anda class based on suit to be used by the function that calculates the winning hand))
@@ -513,5 +521,5 @@ function game() {            //the whole game box, functions first then all the 
     }
     newHand();
 }
-
+deckAssign();
 game();
