@@ -416,20 +416,22 @@ window.onload = function () {
 // [END facebookauthlistener]
 // [END_EXCLUDE]
 function game() {            //the whole game box, functions first then all the logic yeah?   
-    handDeal();
+
 
     function nameAssign() { //assigns connected users info to playerName variables
+        for (i = 0, i < connectionsRef; i++) {
+            Player[i].add('id', player[i]);
+        }
 
     }
-
     //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
 
         const newDeck = [...cardDeck];
-        let cardSelector = (Math.floor(0 => newDeck.length) + 1);
+        let cardSelector = (Math.floor(0 - newDeck.length) + 1);
         shuffledDeck.push(newDeck.splice(cardSelector, 1));
-        if (!playersx2= playercardNumbers) {
+        if (!(connectionsRef * 2) === playercardNumbers) {
             for (i = 0; i <= playernumberx2; i++)
                 shuffledDeck.push(newDeck.splice(cardSelector, 1));
             currentPlayer.push(newDeck.splice(cardSelector, 1));   //how to loop through players??
@@ -478,15 +480,37 @@ function game() {            //the whole game box, functions first then all the 
 
         };
     }
+    function handSelect() {
+        //on final bet ((if betCou callCountTotal=MaxPlayers and drawFunctionCount === 3 )
+        //on click of card class, push to chosenHand array
+        //run hand compare function on chosenHand arrays (a forloop to create a new chosenhand[i] for each player in the hand
+    }
     //function to compare hands and select victor
-    function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
+    function ha ndCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
+        //some like if ((value (i) === value other thing for two pair, handValuePlayerNumber=1
+
+        //need oike a for loloop to sort thru the deck and assign a value to everything based on numeric value anda class based on suit to be used by the function that calculates the winning hand))
+    }
+    function blindSwitch() {    //this will just end up as an infinite loop of moving 
+        $('#currentSmallBlind').removeClass('smallBlind');
+        $('#currentBigBlind').removeClass('bigBlind');
+        $('#currentDealer').removeClass('dealer');
+        for (i = currentPlayerPosition; i < 3; i++) {
+            (currentPlayerPosition + 1).addClass('currentSmallBlind');
+            (currentPlayerPosition + 2).addClass('currentBigBlind');
+            (currentPlayerPosition + 3).addClass('currentDealer');
+
+
+        }
 
     }
-    function blindSwitch() {
-        $('#currentSmallBlind').removeClass('smallBlind')
-        //something to rotate the blinds and dealer (class? ooooo that sounds, like a player.removeClass(smallBlind) player.addClass(bigBlind) or u no)
-    }
     function newHand() { //a function to set the used deck back to full array and begin the deal function
+        blindSwitch();
+        handDeal();
+        potTotal = 0;
+        newDeck = [];
     }
+    newHand();
 }
+
 game();
