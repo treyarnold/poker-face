@@ -421,12 +421,34 @@ function deckAssign() {
 function game() {            //the whole game box, functions first then all the logic yeah?   
 
 
-    function nameAssign() { //assigns connected users info to playerName variables //Instead have the hardcoded variables, on join button adds playername to newplayer
-        for (i = 0, i < connectionsRef; i++) {
-            Player[i].add('id', player[i]);
-        }
-
+    function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
+        playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
+        playerOne.addClass('currentPlayer', 'dealer');
     }
+    function assignPlayerTwo() {
+        playerTwo.addClass('nextPlayer', 'bigBlind');
+        playerNumber++
+    }
+    function assignPlayerThree() {
+        playerThree.addClass('smallBlind')
+        playerNumber++
+    }
+    function assignPlayerFour() {
+        playerNumber++
+    }
+    function assignPlayerFive() {
+        playerNumber++
+    }
+    function assignPlayerSix() {
+        playerNumber++
+    }
+    function assignPlayerSeven() {
+        playerNumber++
+    }
+    function assignPlayerEight() {
+        playerNumber++
+    }
+
     //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
@@ -440,55 +462,77 @@ function game() {            //the whole game box, functions first then all the 
             currentPlayer.push(newDeck.splice(cardSelector, 1));   //how to loop through players??
 
         }
-
+        // $('#smallBlind').remove 2 from playerTotal
     }
     function turnDeal() {
-        //on dealCount = 1, push 3 cards to the tableCards
-        //on dealCount =2/3, push 1 card
-    }
-    function nextTurn() {
-        //currentPlayer=nextPlayer
-        //turnDeal function
+        if (dealCount === 1) {
+            tableCards.push(shuffledDeck(0, 1, 2));
+            shuffledDeck.splice(0, 1, 2);           //check splice syntax, should remove cards from deck and put on table
+        }
+        else {
+            tableCards.push(shuffledDeck(0));
+            shuffledDeck.splice(0);
+        }
+        dealCount++
+        drawFunctionCount++
 
     }
-    function bet() { //fixed in 4s
+    function nextTurn() {
+        // a for each function? for each connected player 
+        for playerNumber =>
+            $('#currentPlayer').removeClass;
+            $('nextPlayer').addClass('currentPlayer');
+        if (callCount === playerNumber) {
+                turnDeal();
+            }
+
+    }
+    function bet() { //fixed in 4s                  //Available move functions
         if (!playerhand === ['']) {
-            currentBet = 4
-            potTotal = potTotal + currentBet;
-            playerTotal = playerTotal - currentBet;
-            raiseValue = raiseValue + 4;
-            nextTurn();
+            if (currentBet === 0) {   //if the current bet is 0 (no one has bet yet)
+                currentBet === 4        //set the current bet to 4 
+            }
+            potTotal = potTotal + currentBet;           //then add it to the pot
+            playerTotal = playerTotal - currentBet;   //take it out of the player total
+            raiseValue = raiseValue + 4;//increment the raise value (for instance would set from 4 to 8 8 to 12)
+            callValue + 4    //increments the call value
+            nextTurn(); //switch player turns
         }
     };
     function raise() {
-        if (!playerhand === ['']) {
-            potTotal = potTotal + raiseValue;
-            playerTotal = playerTotal - raiseValue;
-            currentBet + 4;
-            nextTurn();
+        if (!playerhand === ['']) { //if ya got cards
+            potTotal = potTotal + raiseValue; //add the raised value to the pot
+            playerTotal = playerTotal - raiseValue; //grab it out the player val
+            currentBet + 4; //add the raise to the call value
+            nextTurn(); //switch player turns
         }
     }
+    function call() {
+        if (!playerhand === [''] & (!ccurrentBet === 0)) { //if ya got cards, someone bet -
+            potTotal = currentBet + potTotal; //add the current bet to pot
+            playerTotal = playerTotal - currentBet; //grab it out the hand
+            callCount++ //this variable is used to determine when the next draw function should occur, when callCount === playerNumber
+            nextTurn(); //nex tturn
+        };
+    }
     function check() {
-        if (currentBet === 0) {
-            nextTurn();
+        if (currentBet === 0) { //if no one has bet
+            nextTurn(); //trade turns
         }
     };
     function fold() {
-        if (!playerhand === ['']) {
-            playerhand = [''];
-            nextTurn();
+        if (!playerhand === ['']) { //if ya got cards
+            playerhand = ['']; //now ya don't
+            nextTurn(); //next turn
+            //something to take the player out of rotation??
         };
     }
-    function call() {
-        if (!playerhand === ['']) {
-            potTotal = currentBet + potTotal;
-            playerTotal = playerTotal - currentBet;
-            nextTurn();
 
-
-        };
-    }
     function handSelect() {
+        if ((callCount === numberOfPlayers) & drawFunctionCount === 3) {
+            //enable onclick for the card class
+
+        }
         //on final bet ((if betCou callCountTotal=MaxPlayers and drawFunctionCount === 3 )
         //on click of card class, push to chosenHand array
         //run hand compare function on chosenHand arrays (a forloop to create a new chosenhand[i] for each player in the hand
@@ -508,15 +552,12 @@ function game() {            //the whole game box, functions first then all the 
             (currentPlayerPosition + 1).addClass('currentSmallBlind');
             (currentPlayerPosition + 2).addClass('currentBigBlind');
             (currentPlayerPosition + 3).addClass('currentDealer');
-
-
         }
-
     }
     function newHand() { //a function to set the used deck back to full array and begin the deal function
-        blindSwitch();
-        handDeal();
-        potTotal = 0;
+        blindSwitch(); //rotates the blinds and dealer down one
+        handDeal(); //uses new deck, deals hands to all connected players
+        potTotal = 2; //a new pot
         newDeck = [];
     }
     newHand();
