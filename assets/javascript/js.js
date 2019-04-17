@@ -462,6 +462,7 @@ function game() {            //the whole game box, functions first then all the 
             currentPlayer.push(newDeck.splice(cardSelector, 1));   //how to loop through players??
 
         }
+        blindSwitch();
         // $('#smallBlind').remove 2 from playerTotal
     }
     function turnDeal() {
@@ -479,12 +480,14 @@ function game() {            //the whole game box, functions first then all the 
     }
     function nextTurn() {
         // a for each function? for each connected player 
-        for playerNumber =>
-            $('#currentPlayer').removeClass;
-            $('nextPlayer').addClass('currentPlayer');
+        //for playerNumber =>
+        $('#currentPlayer').removeClass;
+        $('nextPlayer').addClass('currentPlayer');
+        $('nextPlayer').removeClass('nextPlayer')
+        $('nextPlayer+1').addClass('nextPlayer')
         if (callCount === playerNumber) {
-                turnDeal();
-            }
+            turnDeal();
+        }
 
     }
     function bet() { //fixed in 4s                  //Available move functions
@@ -558,9 +561,29 @@ function game() {            //the whole game box, functions first then all the 
         blindSwitch(); //rotates the blinds and dealer down one
         handDeal(); //uses new deck, deals hands to all connected players
         potTotal = 2; //a new pot
-        newDeck = [];
+        newDeck = [''];
     }
     newHand();
 }
 deckAssign();
 game();
+//chat function
+//assume $('#textInput')
+$('submitButton').on('click', function (event) {  //on click of chat submit
+    event.preventDevault(); //dont refresh pls
+    textInput = $('#textInput').val().trim(); //take the value from the chat input
+    database.ref('/chat').push({
+        newTextMessage: textInput,  //push to the newTextMessage var in chat branch
+    },
+        function (errorObject) {  //handle errors
+            console.log(errorObject);
+        })
+
+
+})
+database.ref('/chat').on('child_added', function (childSnap) { //when message sent to firebase
+    $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>') //apend chat to box
+})
+$('clearButton').on('click', function (event) {
+    database.ref('/chat').clear();
+})
