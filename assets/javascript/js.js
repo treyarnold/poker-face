@@ -1,26 +1,24 @@
-// Initialize Firebase
 console.log('helo');
-const playerOneName = '';
-const playerTwoName = '';
-const playerThreeName = '';
-const playerFourName = '';
-const playerFiveName = '';
-const playerSixName = '';
-const playerSevenName = '';
-const playerEightName = '';
-const playerOneHand = [];
-const playerTwoHand = [];
-const playerThreeHand = [];
-const playerFourHand = [];
-const playerFiveHand = [];
-const playerSixHand = [];
-const playerSevenHand = [];
-const playerEightHand = [];
+const player1;
+const player2;
+const player3;
+const player4;
+const player5;
+const player6;
+const player7;
+const player8;
+const player1Hand = [];
+const player2Hand = [];
+const player3Hand = [];
+const player4Hand = [];
+const player5Hand = [];
+const player6Hand = [];
+const player7Hand = [];
+const player8Hand = [];
 let dealCount = 0;
-
 const smallBlind = 2;
 const bigBlind = 4;
-const potTotal = 0;
+let potTotal = 0;
 const playerCardCount = 0;
 const playerPot = 0;
 const raiseValue = 0;
@@ -36,6 +34,15 @@ const cardDeck = ['2h', '2s', '2d', '2c', '3h', '3s', '3d', '3c', '4h', '4s', '4
     '6h', '6s', '6d', '6c', '7h', '7s', '7d', '7c', '8h', '8s', '8d', '8c', '9h', '9s', '9d', '9c', '10h', '10s', '10d', '10c', 'jh',
     'js', 'jd', 'jc', 'qh', 'qs', 'qd', 'qc', 'kh', 'ks', 'kd', 'kc', 'ah', 'as', 'ad', 'ac',]
 let shuffledDeck = [];
+let tableCards = [];
+let player1ChosenCards = [''];
+let player2ChosenCards = [''];
+let player3ChosenCards = [''];
+let player4ChosenCards = [''];
+let player5ChosenCards = [''];
+let player6ChosenCards = [''];
+let player7ChosenCards = [''];
+let player8ChosenCards = [''];
 const config = {
     apiKey: "AIzaSyCw1iDS84Bz7Wk5ifElmdhN1fyQ4LsRALY",
     authDomain: "pokerdata-23592.firebaseapp.com",
@@ -437,36 +444,41 @@ function game() {            //the whole game box, functions first then all the 
 
     function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
         playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
-        playerOne.addClass('currentPlayer', 'dealer');
+        player1.addClass('currentPlayer', 'dealer', 'playerOne');
     }
     function assignPlayerTwo() {
-        playerTwo.addClass('nextPlayer', 'bigBlind');
+        player2.addClass('nextPlayer', 'bigBlind', 'playerTwo');
         playerNumber++
     }
     function assignPlayerThree() {
-        playerThree.addClass('smallBlind')
+        player3.addClass('smallBlind', 'playerThree')
         playerNumber++
     }
     function assignPlayerFour() {
+        player4.addClass('playerFour')
         playerNumber++
     }
     function assignPlayerFive() {
+        player5.addClass('playerFive')
         playerNumber++
     }
     function assignPlayerSix() {
+        player6.addClass('playerSix')
         playerNumber++
     }
     function assignPlayerSeven() {
+        player7.addClass('playerSeven')
         playerNumber++
     }
     function assignPlayerEight() {
+        player8.addClass('playerFive')
         playerNumber++
     }
 
     //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
-
+        activePlayers = [player1, player2, player3, player4, player5, player6, player7, player8];
         const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
         let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
         shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
@@ -498,8 +510,8 @@ function game() {            //the whole game box, functions first then all the 
         //for playerNumber =>
         $('#currentPlayer').removeClass;
         $('nextPlayer').addClass('currentPlayer');
-        $('nextPlayer').removeClass('nextPlayer')
-        $('nextPlayer+1').addClass('nextPlayer')
+        $('nextPlayer').removeClass('nextPlayer');
+        $('nextPlayer+1').addClass('nextPlayer');
         if (callCount === playerNumber) {
             turnDeal();
         }
@@ -542,14 +554,14 @@ function game() {            //the whole game box, functions first then all the 
         if (!playerhand === ['']) { //if ya got cards
             playerhand = ['']; //now ya don't
             nextTurn(); //next turn
-            //something to take the player out of rotation??
+            activePlayer.split(this.localPlayerNumber); //splits player out of active array
         };
     }
 
     function handSelect() {
         if ((callCount === numberOfPlayers) & drawFunctionCount === 3) {
             $('.card').on('click', function (event) {
-                playerChosenHand.push(this)
+                // player[i]ChosenHand.push(this)
             })
 
         }
@@ -604,3 +616,6 @@ database.ref('/chat').on('child_added', function (childSnap) { //when message se
 $('clearButton').on('click', function (event) {
     database.ref('/chat').clear();
 })
+
+//array of active players that contains everyone on first hand
+next turn function , moves down the array
