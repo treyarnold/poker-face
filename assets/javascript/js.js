@@ -54,6 +54,14 @@ var errorMessage;
 var email;
 var credential;
 var user;
+var callBack;
+var displayName;
+var emailVerified;
+var photoURL;
+var isAnonymous;
+var uid;
+var providerData;
+var password;
 connectedRef.on("value", snapshot => { //assign user IDs
     if (snapshot.val()) {
         const connection = connectionRef.push(true);
@@ -70,7 +78,7 @@ $.ajax({
     url: QueryUrl,
     methodf: "GET"
 }).then(function (response) {
-    var callBack = response.data;
+    callBack = response.data;
     console.log(response);
 });
 function toggleSignIn() {
@@ -135,12 +143,12 @@ function initApp() {
         if (user) {
             // User is signed in.
             displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
-            var providerData = user.providerData;
+            email = user.email;
+            emailVerified = user.emailVerified;
+            photoURL = user.photoURL;
+            isAnonymous = user.isAnonymous;
+            uid = user.uid;
+            providerData = user.providerData;
             // [START_EXCLUDE]
             document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
             document.getElementById('quickstart-sign-in').textContent = 'Sign out';
@@ -171,8 +179,8 @@ function toggleSignIn() {    //Email/password sign in from Firebase doc
         firebase.auth().signOut();
         // [END signout]
     } else {
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
+        email = document.getElementById('email').value;
+        password = document.getElementById('password').value;
         if (email.length < 4 & email.includes('@') === false) {
             alert('Please enter an email address.');
             return;
@@ -184,8 +192,8 @@ function toggleSignIn() {    //Email/password sign in from Firebase doc
         // Sign in with email and pass.
         // [START authwithemail]
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
+            errorCode = error.code;
+            errorMessage = error.message;
             // [START_EXCLUDE]
             if (errorCode === 'auth/wrong-password') {
                 alert('Wrong password.');
@@ -204,8 +212,8 @@ function toggleSignIn() {    //Email/password sign in from Firebase doc
  * Handles the sign up button press.
  */
 function handleSignUp() {
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
+    email = document.getElementById('email').value;
+    password = document.getElementById('password').value;
     if (email.length < 4 & email.includes('@') === false) {
         alert('Please enter an email address.');
         return;
@@ -245,7 +253,7 @@ function sendEmailVerification() {
     // [END sendemailverification]
 }
 function sendPasswordReset() {
-    var email = document.getElementById('email').value;
+    email = document.getElementById('email').value;
     // [START sendpasswordemail]
     firebase.auth().sendPasswordResetEmail(email).then(function () {
         // Password Reset Email Sent!
@@ -321,7 +329,7 @@ function checkLoginState(event) {
             if (!isUserEqual(event.authResponse, firebaseUser)) {
                 // Build Firebase credential with the Facebook auth token.
                 // [START facebookcredential]
-                var credential = firebase.auth.FacebookAuthProvider.credential(
+                credential = firebase.auth.FacebookAuthProvider.credential(
                     event.authResponse.accessToken);
                 // [END facebookcredential]
                 // Sign in with the credential from the Facebook user.
@@ -363,7 +371,7 @@ function checkLoginState(event) {
 // [START checksameuser]
 function isUserEqual(facebookAuthResponse, firebaseUser) {
     if (firebaseUser) {
-        var providerData = firebaseUser.providerData;
+        providerData = firebaseUser.providerData;
         for (var i = 0; i < providerData.length; i++) {
             if (providerData[i].providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID &&
                 providerData[i].uid === facebookAuthResponse.userID) {
