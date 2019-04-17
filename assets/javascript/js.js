@@ -440,85 +440,90 @@ function deckAssign() {
     //this will be the for loop that assigns classes and values to the main deck
 }
 function game() {            //the whole game box, functions first then all the logic yeah?   
+    //function playerJoin(){
+    let playerID = `#player${playerNumber}`;
+}
+
+function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
+    playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
+    player1.addClass('currentPlayer', 'dealer', 'playerOne');
 
 
-    function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
-        playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
-        player1.addClass('currentPlayer', 'dealer', 'playerOne');
-    }
-    function assignPlayerTwo() {
-        player2.addClass('nextPlayer', 'bigBlind', 'playerTwo');
-        playerNumber++
-    }
-    function assignPlayerThree() {
-        player3.addClass('smallBlind', 'playerThree')
-        playerNumber++
-    }
-    function assignPlayerFour() {
-        player4.addClass('playerFour')
-        playerNumber++
-    }
-    function assignPlayerFive() {
-        player5.addClass('playerFive')
-        playerNumber++
-    }
-    function assignPlayerSix() {
-        player6.addClass('playerSix')
-        playerNumber++
-    }
-    function assignPlayerSeven() {
-        player7.addClass('playerSeven')
-        playerNumber++
-    }
-    function assignPlayerEight() {
-        player8.addClass('playerFive')
-        playerNumber++
-    }
+}
+function assignPlayerTwo() {
+    player2.addClass('nextPlayer', 'bigBlind', 'playerTwo');
+    playerNumber++
+}
+function assignPlayerThree() {
+    player3.addClass('smallBlind', 'playerThree')
+    playerNumber++
+}
+function assignPlayerFour() {
+    player4.addClass('playerFour')
+    playerNumber++
+}
+function assignPlayerFive() {
+    player5.addClass('playerFive')
+    playerNumber++
+}
+function assignPlayerSix() {
+    player6.addClass('playerSix')
+    playerNumber++
+}
+function assignPlayerSeven() {
+    player7.addClass('playerSeven')
+    playerNumber++
+}
+function assignPlayerEight() {
+    player8.addClass('playerFive')
+    playerNumber++
+}
 
-    //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
-    function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
-        //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
-        activePlayers = [player1, player2, player3, player4, player5, player6, player7, player8];
-        const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
-        let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
-        shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
-        if (!(connectionsRef * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
-            for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
-                shuffledDeck.push(newDeck.splice(cardSelector, 1));
-            playerNumber[i].push(newDeck.splice(cardSelector, 1));   //how to loop through players??
-
-        }
-        blindSwitch();
-        // $('#smallBlind').remove 2 from playerTotal
-    }
-    function turnDeal() { //the new deal for the hand
-        dealCount++
-        if (dealCount === 1) {
-            tableCards.push(shuffledDeck(0, 1, 2));
-            shuffledDeck.splice(0, 1, 2);           //check splice syntax, should remove cards from deck and put on table
-        }
-        else {
-            tableCards.push(shuffledDeck(0));
-            shuffledDeck.splice(0);
-        }
-
-        drawFunctionCount++
+//function to deal the cards, on deal will split a card out of the array by random number index, and push it to
+function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
+    //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
+    activePlayers = [player1, player2, player3, player4, player5, player6, player7, player8];
+    const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
+    let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
+    shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
+    if (!(connectionsRef * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
+        for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
+            shuffledDeck.push(newDeck.splice(cardSelector, 1));
+        playerhand[i].push(newDeck.splice(cardSelector, 1));   //how to loop through players??
 
     }
-    function nextTurn() {
-        // a for each function? for each connected player 
-        //for playerNumber =>
-        $('#currentPlayer').removeClass;
-        $('nextPlayer').addClass('currentPlayer');
-        $('nextPlayer').removeClass('nextPlayer');
-        $('nextPlayer+1').addClass('nextPlayer');
-        if (callCount === playerNumber) {
-            turnDeal();
-        }
-
+    blindSwitch();
+    // $('#smallBlind').remove 2 from playerTotal
+}
+function turnDeal() { //the new deal for the hand
+    dealCount++
+    if (dealCount === 1) {
+        tableCards.push(shuffledDeck(0, 1, 2));
+        shuffledDeck.splice(0, 1, 2);           //check splice syntax, should remove cards from deck and put on table
     }
-    function bet() { //fixed in 4s                  //Available move functions
-        if (!playerhand === ['']) {
+    else {
+        tableCards.push(shuffledDeck(0));
+        shuffledDeck.splice(0);
+    }
+
+    drawFunctionCount++
+
+}
+function nextTurn() {
+    // a for each function? for each connected player 
+    //for playerNumber =>
+    $('#currentPlayer').removeClass;
+    $('nextPlayer').addClass('currentPlayer');
+    $('nextPlayer').removeClass('nextPlayer');
+    $('nextPlayer+1').addClass('nextPlayer');
+    if (callCount === playerNumber) {
+        turnDeal();
+    }
+
+}
+function bet() { //fixed in 4s   
+    if (this.currentPlayer === you) {               //Available move functions
+        if (!playerhand === ['']) { //if playerfromfirebase = your player           //gamestate on value change for whos turn it is that gets updated for current turn = firebase info could also move down array
             if (currentBet === 0) {   //if the current bet is 0 (no one has bet yet)
                 currentBet === 4        //set the current bet to 4 
             }
@@ -528,8 +533,10 @@ function game() {            //the whole game box, functions first then all the 
             callValue + 4    //increments the call value
             nextTurn(); //switch player turns
         }
-    };
-    function raise() {
+    }
+};
+function raise() {
+    if (this.currentPlayer === you) {
         if (!playerhand === ['']) { //if ya got cards
             potTotal = potTotal + raiseValue; //add the raised value to the pot
             playerTotal = playerTotal - raiseValue; //grab it out the player val
@@ -537,62 +544,68 @@ function game() {            //the whole game box, functions first then all the 
             nextTurn(); //switch player turns
         }
     }
-    function call() {
+}
+function call() {
+    if (this.currentPlayer === you) {
         if (!playerhand === [''] & (!ccurrentBet === 0)) { //if ya got cards, someone bet -
             potTotal = currentBet + potTotal; //add the current bet to pot
             playerTotal = playerTotal - currentBet; //grab it out the hand
             callCount++ //this variable is used to determine when the next draw function should occur, when callCount === playerNumber
             nextTurn(); //nex tturn
         };
-    }
-    function check() {
+    };
+};
+function check() {
+    if (this.currentPlayer === you) {
         if (currentBet === 0) { //if no one has bet
             nextTurn(); //trade turns
         }
-    };
-    function fold() {
+    }
+};
+function fold() {
+    if (this.currentPlayer === you) {
         if (!playerhand === ['']) { //if ya got cards
             playerhand = ['']; //now ya don't
             nextTurn(); //next turn
             activePlayer.split(this.localPlayerNumber); //splits player out of active array
         };
     }
+}
+function handSelect() {
+    if ((callCount === numberOfPlayers) & drawFunctionCount === 3) { //on final bet ((if betCou callCountTotal=MaxPlayers and drawFunctionCount === 3 )
+        $('.card').on('click', function (event) {
+            // player[i]ChosenHand.push(this)    //on click of card class, push to chosenHand array
+        })
 
-    function handSelect() {
-        if ((callCount === numberOfPlayers) & drawFunctionCount === 3) {
-            $('.card').on('click', function (event) {
-                // player[i]ChosenHand.push(this)
-            })
+    }
 
-        }
-        //on final bet ((if betCou callCountTotal=MaxPlayers and drawFunctionCount === 3 )
-        //on click of card class, push to chosenHand array
-        //run hand compare function on chosenHand arrays (a forloop to create a new chosenhand[i] for each player in the hand
-    }
-    //function to compare hands and select victor
-    function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
-        //some like if ((value (i) === value other thing for two pair, handValuePlayerNumber=1
+    //on click of card class, push to chosenHand array
+    //run hand compare function on chosenHand arrays (a forloop to create a new chosenhand[i] for each player in the hand
+}
+//function to compare hands and select victor
+function handCompare() {  //maybe a for loop to sort thru the 7 cards available and by criteria can push them to seperate arrays and based on array with highest value orrr??
+    //some like if ((value (i) === value other thing for two pair, handValuePlayerNumber=1
 
-        //need oike a for loloop to sort thru the deck and assign a value to everything based on numeric value anda class based on suit to be used by the function that calculates the winning hand))
-    }   //could do something like for cardDeck[i], somehow m[ix4 xponentially (Every 4th iteration in the array).addClass SuitHearts suitDiamonds ect.
-    //do the same thing but [i] [i+12] assign value 2, 3, 4 eect ]
-    function blindSwitch() {    //this will just end up as an infinite loop of moving 
-        $('#currentSmallBlind').removeClass('smallBlind');
-        $('#currentBigBlind').removeClass('bigBlind');
-        $('#currentDealer').removeClass('dealer');
-        for (i = currentPlayerPosition; i < 3; i++) {
-            (currentPlayerPosition + 1).addClass('currentSmallBlind');
-            (currentPlayerPosition + 2).addClass('currentBigBlind');
-            (currentPlayerPosition + 3).addClass('currentDealer');
-        }
+    //need oike a for loloop to sort thru the deck and assign a value to everything based on numeric value anda class based on suit to be used by the function that calculates the winning hand))
+}   //could do something like for cardDeck[i], somehow m[ix4 xponentially (Every 4th iteration in the array).addClass SuitHearts suitDiamonds ect.
+//do the same thing but [i] [i+12] assign value 2, 3, 4 eect ]
+function blindSwitch() {    //this will just end up as an infinite loop of moving 
+    $('#currentSmallBlind').removeClass('smallBlind');
+    $('#currentBigBlind').removeClass('bigBlind');
+    $('#currentDealer').removeClass('dealer');
+    for (i = currentPlayerPosition; i < 3; i++) {
+        (currentPlayerPosition + 1).addClass('currentSmallBlind');
+        (currentPlayerPosition + 2).addClass('currentBigBlind');
+        (currentPlayerPosition + 3).addClass('currentDealer');
     }
-    function newHand() { //a function to set the used deck back to full array and begin the deal function
-        blindSwitch(); //rotates the blinds and dealer down one
-        handDeal(); //uses new deck, deals hands to all connected players
-        potTotal = 2; //a new pot
-        newDeck = [''];
-    }
-    newHand();
+}
+function newHand() { //a function to set the used deck back to full array and begin the deal function
+    blindSwitch(); //rotates the blinds and dealer down one
+    handDeal(); //uses new deck, deals hands to all connected players
+    potTotal = 2; //a new pot
+    newDeck = [''];
+}
+newHand();
 }
 deckAssign();
 game();
