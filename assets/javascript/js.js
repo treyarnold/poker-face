@@ -441,7 +441,7 @@ function deckAssign() {
 }
 function game() {            //the whole game box, functions first then all the logic yeah?   
     //function playerJoin(){
-    let playerID = `#player${playerNumber}`;
+    // let playerID = `#player${playerNumber}`;
 }
 
 function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
@@ -606,7 +606,7 @@ function newHand() { //a function to set the used deck back to full array and be
     newDeck = [''];
 }
 newHand();
-}
+
 deckAssign();
 game();
 //chat function
