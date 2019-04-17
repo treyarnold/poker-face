@@ -18,7 +18,6 @@ public class PlayerImage : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    Debug.Log(playerAvatar);
     avatarImage.sprite = playerAvatar;
   }
 }
