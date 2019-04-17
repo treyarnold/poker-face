@@ -16,6 +16,8 @@ const playerFiveHand = [];
 const playerSixHand = [];
 const playerSevenHand = [];
 const playerEightHand = [];
+let dealCount = 0;
+
 const smallBlind = 2;
 const bigBlind = 4;
 const potTotal = 0;
@@ -44,10 +46,14 @@ const config = {
 };
 firebase.initializeApp(config);
 const DB = firebase.database();
-const connectionRef = DB.ref("/players")
+// const numberofPlayers = DB.ref("/players") maybe this instead of incrementing it on every player add function?
 const connectedRef = DB.ref(".info/connected")
 const gameState = DB.ref("gameState");
-
+var errorCode;
+var errorMessage;
+var email;
+var credential;
+var user;
 connectedRef.on("value", snapshot => { //assign user IDs
     if (snapshot.val()) {
         const connection = connectionRef.push(true);
@@ -103,15 +109,15 @@ function initApp() {
             // [END_EXCLUDE]
         }
         // The signed-in user info.
-        var user = result.user;
+        user = result.user;
     }).catch(function (error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        errorCode = error.code;
+        errorMessage = error.message;
         // The email of the user's account used.
-        var email = error.email;
+        email = error.email;
         // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
+        credential = error.credential;
         // [START_EXCLUDE]
         if (errorCode === 'auth/account-exists-with-different-credential') {
             alert('You have already signed up with a different auth provider for that email.');
@@ -248,8 +254,8 @@ function sendPasswordReset() {
         // [END_EXCLUDE]
     }).catch(function (error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        errorCode = error.code;
+        errorMessage = error.message;
         // [START_EXCLUDE]
         if (errorCode == 'auth/invalid-email') {
             alert(errorMessage);
@@ -270,13 +276,13 @@ function initApp2() {
         // [END_EXCLUDE]
         if (user) {
             // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
-            var providerData = user.providerData;
+            displayName = user.displayName;
+            email = user.email;
+            emailVerified = user.emailVerified;
+            photoURL = user.photoURL;
+            isAnonymous = user.isAnonymous;
+            uid = user.uid;
+            providerData = user.providerData;
             // [START_EXCLUDE]
             document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
             document.getElementById('quickstart-sign-in').textContent = 'Sign out';
@@ -322,12 +328,12 @@ function checkLoginState(event) {
                 // [START authwithcred]
                 firebase.auth().signInAndRetrieveDataWithCredential(credential).catch(function (error) {
                     // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
+                    errorCode = error.code;
+                    errorMessage = error.message;
                     // The email of the user's account used.
-                    var email = error.email;
+                    email = error.email;
                     // The firebase.auth.AuthCredential type that was used.
-                    var credential = error.credential;
+                    credential = error.credential;
                     // [START_EXCLUDE]
                     if (errorCode === 'auth/account-exists-with-different-credential') {
                         alert('You have already signed up with a different auth provider for that email.');
@@ -380,13 +386,13 @@ function initApp3() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
-            var providerData = user.providerData;
+            displayName = user.displayName;
+            email = user.email;
+            emailVerified = user.emailVerified;
+            photoURL = user.photoURL;
+            isAnonymous = user.isAnonymous;
+            uid = user.uid;
+            providerData = user.providerData;
             // [START_EXCLUDE]
             // document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
             //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');  UNCOMMENT
@@ -453,19 +459,20 @@ function game() {            //the whole game box, functions first then all the 
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
 
-        const newDeck = [...cardDeck];
-        let cardSelector = (Math.floor(0 - newDeck.length) + 1);
-        shuffledDeck.push(newDeck.splice(cardSelector, 1));
-        if (!(connectionsRef * 2) === playercardNumbers) {
-            for (i = 0; i <= playernumberx2; i++)
+        const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
+        let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
+        shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
+        if (!(connectionsRef * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
+            for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
                 shuffledDeck.push(newDeck.splice(cardSelector, 1));
-            currentPlayer.push(newDeck.splice(cardSelector, 1));   //how to loop through players??
+            playerNumber[i].push(newDeck.splice(cardSelector, 1));   //how to loop through players??
 
         }
         blindSwitch();
         // $('#smallBlind').remove 2 from playerTotal
     }
-    function turnDeal() {
+    function turnDeal() { //the new deal for the hand
+        dealCount++
         if (dealCount === 1) {
             tableCards.push(shuffledDeck(0, 1, 2));
             shuffledDeck.splice(0, 1, 2);           //check splice syntax, should remove cards from deck and put on table
@@ -474,7 +481,7 @@ function game() {            //the whole game box, functions first then all the 
             tableCards.push(shuffledDeck(0));
             shuffledDeck.splice(0);
         }
-        dealCount++
+
         drawFunctionCount++
 
     }
@@ -533,7 +540,9 @@ function game() {            //the whole game box, functions first then all the 
 
     function handSelect() {
         if ((callCount === numberOfPlayers) & drawFunctionCount === 3) {
-            //enable onclick for the card class
+            $('.card').on('click', function (event) {
+                playerChosenHand.push(this)
+            })
 
         }
         //on final bet ((if betCou callCountTotal=MaxPlayers and drawFunctionCount === 3 )
