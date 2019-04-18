@@ -458,7 +458,15 @@ function game() {            //the whole game box, functions first then all the 
     //function playerJoin(){
     // let playerID = `#player${playerNumber}`;
 
-
+    //sample something like what trey has
+    //function playerJoin(playerNumber) {
+    //   let playerID = `player${playerNumber}`;
+    //playerNumber++
+    //loop to add deal and blinds to first 3 objects in active player array
+    //slower loop concept for bet move???
+    //POSSIBLY TEMPLATE LITERAL TO FORCE THE NUMBER INTO THE PLAYER VARIABLE?
+    //`player${playerNumber}` === you?
+    //  }
     function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
         playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
         player1.addClass('currentPlayer', 'dealer', 'playerOne');
@@ -540,7 +548,7 @@ function game() {            //the whole game box, functions first then all the 
 
     }
     function bet() { //fixed in 4s   
-        if (this.currentPlayer === you) {               //Available move functions
+        if (this.playerNumber === you) {               //Available move functions
             if (!playerhand === ['']) { //if playerfromfirebase = your player           //gamestate on value change for whos turn it is that gets updated for current turn = firebase info could also move down array
                 if (currentBet === 0) {   //if the current bet is 0 (no one has bet yet)
                     currentBet === 4        //set the current bet to 4 
@@ -554,7 +562,7 @@ function game() {            //the whole game box, functions first then all the 
         }
     };
     function raise() {
-        if (this.currentPlayer === you) {
+        if (this.playerNumber === you) {
             if (!playerhand === ['']) { //if ya got cards
                 potTotal = potTotal + raiseValue; //add the raised value to the pot
                 playerTotal = playerTotal - raiseValue; //grab it out the player val
@@ -564,7 +572,7 @@ function game() {            //the whole game box, functions first then all the 
         }
     }
     function call() {
-        if (this.currentPlayer === you) {
+        if (this.playerNumber === you) {
             if (!playerhand === [''] & (!ccurrentBet === 0)) { //if ya got cards, someone bet -
                 potTotal = currentBet + potTotal; //add the current bet to pot
                 playerTotal = playerTotal - currentBet; //grab it out the hand
@@ -574,14 +582,14 @@ function game() {            //the whole game box, functions first then all the 
         };
     };
     function check() {
-        if (this.currentPlayer === you) {
+        if (this.playerNumber === you) {
             if (currentBet === 0) { //if no one has bet
                 nextTurn(); //trade turns
             }
         }
     };
     function fold() {
-        if (this.currentPlayer === you) {
+        if (this.playerNumber === you) {
             if (!playerhand === ['']) { //if ya got cards
                 playerhand = ['']; //now ya don't
                 nextTurn(); //next turn
@@ -607,16 +615,16 @@ function game() {            //the whole game box, functions first then all the 
         //need oike a for loloop to sort thru the deck and assign a value to everything based on numeric value anda class based on suit to be used by the function that calculates the winning hand))
     }   //could do something like for cardDeck[i], somehow m[ix4 xponentially (Every 4th iteration in the array).addClass SuitHearts suitDiamonds ect.
     //do the same thing but [i] [i+12] assign value 2, 3, 4 eect ]
-    function blindSwitch() {    //this will just end up as an infinite loop of moving 
-        $('#currentSmallBlind').removeClass('smallBlind');
-        $('#currentBigBlind').removeClass('bigBlind');
-        $('#currentDealer').removeClass('dealer');
-        for (i = currentPlayerPosition; i < 3; i++) {
-            (currentPlayerPosition + 1).addClass('currentSmallBlind');
-            (currentPlayerPosition + 2).addClass('currentBigBlind');
-            (currentPlayerPosition + 3).addClass('currentDealer');
-        }
-    }
+    // function blindSwitch() {    //this will just end up as an infinite loop of moving 
+    // $('#currentSmallBlind').removeClass('smallBlind');
+    // $('#currentBigBlind').removeClass('bigBlind');
+    // $('#currentDealer').removeClass('dealer');
+    // for (i = currentPlayerPosition; i < 3; i++) {
+    //     (currentPlayerPosition + 1).addClass('currentSmallBlind');
+    //     (currentPlayerPosition + 2).addClass('currentBigBlind');
+    //     (currentPlayerPosition + 3).addClass('currentDealer');
+    // }
+    //}
     function newHand() { //a function to set the used deck back to full array and begin the deal function
         blindSwitch(); //rotates the blinds and dealer down one
         handDeal(); //uses new deck, deals hands to all connected players
