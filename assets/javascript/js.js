@@ -32,9 +32,7 @@ var isAnonymous;
 var uid;
 var providerData;
 var password;
-//ON JOIN PLAYER BUTTON, PUSH THAT LOCALID TO PLAYER SELECTED,
-//ON PUSH TO PLAYER ROOM, ADD INTO THE ROTATION?
-const pagereturn = 1 //ajax unsplash query for card backings
+const pagereturn = 1;
 let query = 'dogs'
 const QueryUrl = `https://api.unsplash.com/search/photos?page=${pagereturn}&query=${query}&client_id=1a8efd59c4b5cb5e177aea595dc217c32b578bb3d681940bb9c01a4bf5cc0919`;
 $.ajax({
@@ -46,29 +44,18 @@ $.ajax({
 });
 function toggleSignIn() {
     if (!firebase.auth().currentUser) {
-        // [START createprovider]
+
         var provider = new firebase.auth.GoogleAuthProvider();
-        // [END createprovider]
-        // [START addscopes]
         provider.addScope('https://www.googleapis.com/auth/plus.login');
-        // [END addscopes]
-        // [START signin]
         firebase.auth().signInWithRedirect(provider);
-        // [END signin]
     } else {
-        // [START signout]
         firebase.auth().signOut();
-        // [END signout]
     }
-    // [START_EXCLUDE]
     document.getElementById('quickstart-sign-in').disabled = true;
-    // [END_EXCLUDE]
 }
 
 
 function initApp() {
-    // Result from Redirect auth flow.
-    // [START getidptoken]
     firebase.auth().getRedirectResult().then(function (result) {
         if (result.credential) {
             // This gives you a Google Access Token. You can use it to access the Google API.
@@ -82,11 +69,8 @@ function initApp() {
     }).catch(function (error) {
         errorCode = error.code;
         errorMessage = error.message;
-        // The email of the user's account used.
         email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
         credential = error.credential;
-        // [START_EXCLUDE]
         if (errorCode === 'auth/account-exists-with-different-credential') {
             alert('You have already signed up with a different auth provider for that email.');
             // If you are using multiple auth providers on your app you should handle linking
@@ -94,11 +78,8 @@ function initApp() {
         } else {
             console.error(error);
         }
-        // [END_EXCLUDE]
     });
-    // [END getidptoken]
     // Listening for auth state changes.
-    // [START authstatelistener]
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
@@ -109,11 +90,11 @@ function initApp() {
             isAnonymous = user.isAnonymous;
             uid = user.uid;
             providerData = user.providerData;
-            // [START_EXCLUDE]
+
             document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
             document.getElementById('quickstart-sign-in').textContent = 'Sign out';
             document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-            // [END_EXCLUDE]
+
         } else {
             // User is signed out.
             // [START_EXCLUDE]
@@ -453,7 +434,7 @@ function game() {            //the whole game box, functions first then all the 
     //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
-        activePlayers = [player1, player2, player3, player4, player5, player6, player7, player8];
+        activePlayers = [];
         const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
         let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
         shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
@@ -592,3 +573,6 @@ $('clearButton').on('click', function (event) {
     database.ref('/chat').clear();
 });
 
+//when they hjoin push them to the active array
+//in the javascript list big blinf small dealer in gamestate on firebase
+//if your position = bigblind 
