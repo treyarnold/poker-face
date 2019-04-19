@@ -18,7 +18,6 @@ const cardDeck = ['2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', 'jh', '
     'kc', 'ac', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s', 'js', 'qs', 'ks', 'as',]
 let shuffledDeck = [];
 let tableCards = [];
-
 var errorCode;
 var errorMessage;
 var email;
@@ -305,11 +304,8 @@ function checkLoginState(event) {
         // [END signout]
     }
 }
-// [END facebookcallback]
-/**
- * Check that the given Facebook user is equals to the  given Firebase user
- */
-// [START checksameuser]
+// Check that the given Facebook user is equals to the  given Firebase user
+
 function isUserEqual(facebookAuthResponse, firebaseUser) {
     if (firebaseUser) {
         providerData = firebaseUser.providerData;
@@ -323,12 +319,11 @@ function isUserEqual(facebookAuthResponse, firebaseUser) {
     }
     return false;
 }
-// [END checksameuser]
-/**
- * initApp handles setting up UI event listeners and registering Firebase auth listeners:
- *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
- *    out, and that is where we update the UI.
- */
+//
+//  * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+//  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+//  *    out, and that is where we update the UI.
+//  */
 function initApp3() {
     // Listening for auth state changes.
     // [START authstatelistener]
@@ -364,15 +359,7 @@ FB.init({
     xfbml: true,
     version: 'v2.6'
 });
-// [START_EXCLUDE silent]
-// Observe the change in Facebook login status
-// [START facebookauthlistener]
 FB.Event.subscribe('auth.authResponseChange', checkLoginState);
-// [END facebookauthlistener] diam clu bspa
-// [END_EXCLUDE]
-
-
-
 const config = {
     apiKey: "AIzaSyCw1iDS84Bz7Wk5ifElmdhN1fyQ4LsRALY",
     authDomain: "pokerdata-23592.firebaseapp.com",
@@ -386,7 +373,6 @@ const DB = firebase.database();
 const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
 const connectedRef = DB.ref(".info/connected");
 const loggedInRef = DB.ref(".info/loggedIn");
-//number of people connected
 const gameState = DB.ref("gameState");
 connectedRef.on("value", snapshot => { //assign user IDs  //THIS IS THE MULTIPLAYER FUNCTIONALITY
     if (snapshot.val()) {
@@ -395,18 +381,14 @@ connectedRef.on("value", snapshot => { //assign user IDs  //THIS IS THE MULTIPLA
         connection.onDisconnect().remove();
     }
 });
-
-
 loggedInRef.on('value', snapshot => {
     if (snapshot.val()) {
         DB.ref('/loggedIn').push({
             localId: game.localId,
-            playerName: localPlayerName,
+            playerName: snapshot.displayName,
         })
     }
 })
-
-
 playerRoom.on("value", "THIS IS WHERE SEAT WILL GO", event => {
     event.preventDefault();
     const playerSeat = event.target.seatNumber;
@@ -415,23 +397,19 @@ playerRoom.on("value", "THIS IS WHERE SEAT WILL GO", event => {
     };
     game.localPlayerSeat = playerSeat;
     playerJoinNumber++
+    // if (event.target.seatNumber === 1) {
+    // playerRoom.ref().push({
+
+    //})
+    //}
     DB.ref(`playerRoom/${game.localID}`).update(player);
-    if (event.target.seatNumber === 1) {
-
-    }
 });
-function game() {            //the whole game box, functions first then all the logic yeah?   
-
-    //loop to add deal and blinds to first 3 objects in active player array
-    //slower loop concept for bet move???
-    //POSSIBLY TEMPLATE LITERAL TO FORCE THE NUMBER INTO THE PLAYER VARIABLE?
-    //`player${playerNumber}` === you?
-    //  }
-
-
-
-
-    //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
+function game() {
+    function newHand() {
+        handDeal(); //uses new deck, deals hands to all connected players
+        potTotal = 2; //a new pot
+        newDeck = [''];
+    }
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
         activePlayers = [];
@@ -445,7 +423,7 @@ function game() {            //the whole game box, functions first then all the 
 
         }
         blindSwitch();
-        // $('#smallBlind').remove 2 from playerTotal
+        player.smallblind.potTotal - 2;
         potTotal = potTotal + 2;
     }
     function turnDeal() { //the new deal for the hand
@@ -458,20 +436,15 @@ function game() {            //the whole game box, functions first then all the 
             tableCards.push(shuffledDeck(0));
             shuffledDeck.splice(0, 1);
         }
-
         drawFunctionCount++ //used by the handselect function to count how many deals have gone out, at 3 is a requirement for the on card click function to activate
-
     }
     function nextTurn() {
-        // a for each function? for each connected player 
-        //for playerNumber =>                                       //// ???????
-
         if (callCount === activePlayer.length) {
             turnDeal();
         }
 
     }
-    function bet() { //fixed in 4s   
+    function bet() {
         if (this.playerNumber === you) {               //Available move functions
             if (!playerhand === ['']) { //if playerfromfirebase = your player           //gamestate on value change for whos turn it is that gets updated for current turn = firebase info could also move down array
                 if (currentBet === 0) {   //if the current bet is 0 (no one has bet yet)
@@ -497,7 +470,7 @@ function game() {            //the whole game box, functions first then all the 
 
     function call() {
         if (this.playerNumber === you) {
-            if (!playerhand === [''] & (!ccurrentBet === 0)) { //if ya got cards, someone bet -
+            if (!playerhand === [''] & (!currentBet === 0)) { //if ya got cards, someone bet -
                 potTotal = currentBet + potTotal; //add the current bet to pot
                 playerTotal = playerTotal - currentBet; //grab it out the hand
                 callCount++ //this variable is used to determine when the next draw function should occur, when callCount === playerNumber
@@ -506,51 +479,41 @@ function game() {            //the whole game box, functions first then all the 
         };
     };
     function check() {
-        if (//whoevers turn in firebase === playerSeat) {
-            // if (currentBet === 0) { //if no one has bet
-            nextTurn(); //trade turns
-        //  }
+        //  if (//whoevers turn in firebase === playerSeat) {
+        if (currentBet === 0) { //if no one has bet
+            nextTurn() //trade turns
+            //  }
+        }
     }
-};
-function fold() {
-    if (game.localId === local.Id) {
-        if (!playerhand === ['']) { //if ya got cards
-            playerhand = ['']; //now ya don't
-            nextTurn(); //next turn
-            activePlayer.split(this.localPlayerNumber); //splits player out of active array
-        };
+    function fold() {
+        if (game.localId === local.Id) {
+            if (!playerhand === ['']) { //if ya got cards
+                playerhand = ['']; //now ya don't
+                nextTurn(); //next turn
+                activePlayer.split(this.localPlayerNumber); //splits player out of active array
+            };
+        }
     }
-}
-function handSelect() {
-    if ((callCount === activePlayer.length) & drawFunctionCount === 3) { //on final bet ((if betCou callCountTotal=MaxPlayers and drawFunctionCount === 3 )
-        $('.card').on('click', function (event) {
-            //   (this)gameconnectionsplayerChosenHand.push(this)    //on click of card class, push to chosenHand array
-        })
-
+    function blindSwitch() {    //this will just end up as an infinite loop of moving 
+        //A LOOP THAT ON NEW DEAL PUSHES DEALER (AND BLINDS) OVER ONE
     }
-
-    //on click of card class, push to chosenHand array
-    //run hand compare function on chosenHand arrays (a forloop to create a new chosenhand[i] for each player in the hand
-}
-//function to compare hands and select victor
-
-function blindSwitch() {    //this will just end up as an infinite loop of moving 
-    $('#currentSmallBlind').removeClass('smallBlind');
-    $('#currentBigBlind').removeClass('bigBlind');
-    $('#currentDealer').removeClass('dealer');
-    for (i = currentPlayerPosition; i < 3; i++) {
-        (currentPlayerPosition + 1).addClass('currentSmallBlind');
-        (currentPlayerPosition + 2).addClass('currentBigBlind');
-        (currentPlayerPosition + 3).addClass('currentDealer');
+    function newHand() { //a function to set the used deck back to full array and begin the deal function
+        //rotates the blinds and dealer down one
+        handDeal(); //uses new deck, deals hands to all connected players
+        potTotal = 2; //a new pot
+        newDeck = [''];
     }
+    function handCompare() {
+        //loop through all possible combos of the 7 available cards
+        //pull the highest value and assign it to player in firebase
+    }
+    function victory() {
+        //winningPlayer.playerTotal+potTotal
+        potTotal = 0
+        newHand();
+    }
+    handDeal();
 }
-function newHand() { //a function to set the used deck back to full array and begin the deal function
-    //rotates the blinds and dealer down one
-    handDeal(); //uses new deck, deals hands to all connected players
-    potTotal = 2; //a new pot
-    newDeck = [''];
-}
-
 game();
 console.log('hello 2')
 
@@ -576,3 +539,10 @@ $('clearButton').on('click', function (event) {
 //when they hjoin push them to the active array
 //in the javascript list big blinf small dealer in gamestate on firebase
 //if your position = bigblind 
+
+
+//TO DO:
+//Blind switch function
+// hand deal function
+// hand compare function
+// win function
