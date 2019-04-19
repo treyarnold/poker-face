@@ -1,12 +1,12 @@
 console.log('helo');
-const player1;
-const player2;
-const player3;
-const player4;
-const player5;
-const player6;
-const player7;
-const player8;
+const player1 = '';
+const player2 = '';
+const player3 = '';
+const player4 = '';
+const player5 = '';
+const player6 = '';
+const player7 = '';
+const player8 = '';
 const player1Hand = [];
 const player2Hand = [];
 const player3Hand = [];
@@ -53,8 +53,8 @@ const config = {
 };
 firebase.initializeApp(config);
 const DB = firebase.database();
-// const numberofPlayers = DB.ref("/players") maybe this instead of incrementing it on every player add function?
-const connectedRef = DB.ref(".info/connected")
+const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
+const connectedRef = DB.ref(".info/connected") //number of people connected
 const gameState = DB.ref("gameState");
 var errorCode;
 var errorMessage;
@@ -69,15 +69,8 @@ var isAnonymous;
 var uid;
 var providerData;
 var password;
-connectedRef.on("value", snapshot => { //assign user IDs
-    if (snapshot.val()) {
-        const connection = connectionRef.push(true);
-        game.localID = connection.key;
-        connection.onDisconnect().remove(() => {
-            gameState.remove();
-        });
-    }
-});
+//ON JOIN PLAYER BUTTON, PUSH THAT LOCALID TO PLAYER SELECTED,
+//ON PUSH TO PLAYER ROOM, ADD INTO THE ROTATION?
 const pagereturn = 1 //ajax unsplash query for card backings
 let query = 'dogs'
 const QueryUrl = `https://api.unsplash.com/search/photos?page=${pagereturn}&query=${query}&client_id=1a8efd59c4b5cb5e177aea595dc217c32b578bb3d681940bb9c01a4bf5cc0919`;
@@ -117,16 +110,13 @@ function initApp() {
         if (result.credential) {
             // This gives you a Google Access Token. You can use it to access the Google API.
             var token = result.credential.accessToken;
-            // [START_EXCLUDE]
             document.getElementById('quickstart-oauthtoken').textContent = token;
         } else {
             document.getElementById('quickstart-oauthtoken').textContent = 'null';
-            // [END_EXCLUDE]
         }
         // The signed-in user info.
         user = result.user;
     }).catch(function (error) {
-        // Handle Errors here.
         errorCode = error.code;
         errorMessage = error.message;
         // The email of the user's account used.
@@ -436,72 +426,43 @@ window.onload = function () {
 //FB.Event.subscribe('auth.authResponseChange', checkLoginState);
 // [END facebookauthlistener] diam clu bspa
 // [END_EXCLUDE]
-function deckAssign() {
-    for (i = 0; i > (cardDeck.length / 4); i++) {
-        cardDeck[i].val([i + 2]).addClass('card', 'hearts')
-
-    }
-    //if every 4th iteration if I, increase the value attatched by 
-    for (i = 13; i > (cardDeck.length / 4); i++) {
-        cardDeck[i].val([(i + 2) - 13]).addClass('card', 'diamonds');
-    }
-
-    for (i = 26; i > (cardDeck.length / 4); i++) {
-        cardDeck[i].val([(i + 2) - 26]).addClass('card', 'clubs');
-    }
-    for (i = 39; i > (cardDeck.length / 4); i++) {
-        cardDeck[i].val([(i + 2) - 39]).addClass('card', 'spades');
-    }
-}
-
+//on change for connectiosn assigns a name to the localid
+//on seat pick push seat to the id
+//ON CONNECTION CHANGE
+//ASSIGN NAME TO LOCAL ID
+connectedRef.on('value', snapshot)
+connectedRef.on("value", snapshot => { //assign user IDs
+    if (snapshot.val()) {
+        const connection = connectionRef.push(true);
+        game.localID = connection.key;
+        connection.onDisconnect().remove(() => {
+            gameState.remove();
+        });
+        //log in creates playername, 
+        //on join 
+        //push to firebase 
+    } //function to assign 
+});
 function game() {            //the whole game box, functions first then all the logic yeah?   
     //function playerJoin(){
     // let playerID = `#player${playerNumber}`;
 
     //sample something like what trey has
-    //function playerJoin(playerNumber) {
-    //   let playerID = `player${playerNumber}`;
-    //playerNumber++
-    //loop to add deal and blinds to first 3 objects in active player array
-    //slower loop concept for bet move???
-    //POSSIBLY TEMPLATE LITERAL TO FORCE THE NUMBER INTO THE PLAYER VARIABLE?
-    //`player${playerNumber}` === you?
-    //  }
-    function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
-        playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
-        player1.addClass('currentPlayer', 'dealer', 'playerOne');
-        //code that assigns the local gameId to player1
+    function playerJoin(playerJoinNumber) {
+        let playerID = `player${playerJoinNumber}`;
+        playerNumber++
+        //loop to add deal and blinds to first 3 objects in active player array
+        //slower loop concept for bet move???
+        //POSSIBLY TEMPLATE LITERAL TO FORCE THE NUMBER INTO THE PLAYER VARIABLE?
+        //`player${playerNumber}` === you?
+        //  }
+        function assignPlayerOne() {            //for the player join buttons, attatches the connection to the playerNumbers
+            playerNumber++                      //sets player one to currentPlayer and Dealer, player Two to big blind and 3 to small blind
+            player1.addClass('currentPlayer', 'dealer', 'playerOne');
+            //code that assigns the local gameId to player1
 
-    }
-    function assignPlayerTwo() {
-        player2.addClass('nextPlayer', 'bigBlind', 'playerTwo');
-        playerNumber++
-        //localGameId === player2
-    }
-    function assignPlayerThree() {
-        player3.addClass('smallBlind', 'playerThree')
-        playerNumber++
-        //ect
-    }
-    function assignPlayerFour() {
-        player4.addClass('playerFour')
-        playerNumber++
-    }
-    function assignPlayerFive() {
-        player5.addClass('playerFive')
-        playerNumber++
-    }
-    function assignPlayerSix() {
-        player6.addClass('playerSix')
-        playerNumber++
-    }
-    function assignPlayerSeven() {
-        player7.addClass('playerSeven')
-        playerNumber++
-    }
-    function assignPlayerEight() {
-        player8.addClass('playerFive')
-        playerNumber++
+        }
+
     }
 
     //function to deal the cards, on deal will split a card out of the array by random number index, and push it to
@@ -511,7 +472,7 @@ function game() {            //the whole game box, functions first then all the 
         const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
         let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
         shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
-        if (!(connectionsRef * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
+        if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
             for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
                 shuffledDeck.push(newDeck.splice(cardSelector, 1));
             playerhand[i].push(newDeck.splice(cardSelector, 1));   //how to loop through players?? //FOR CLASS 
@@ -632,12 +593,15 @@ function game() {            //the whole game box, functions first then all the 
         newDeck = [''];
     }
     newHand();
-    deckAssign();  //?
+    //?
+}
 }
 deckAssign();
 game();
+console.log('hello 2')
+console.log(cardDeck[3].val())
 //chat function
-//assume $('#textInput')
+//show name function
 $('submitButton').on('click', function (event) {  //on click of chat submit
     event.preventDevault(); //dont refresh pls
     textInput = $('#textInput').val().trim(); //take the value from the chat input
@@ -647,13 +611,11 @@ $('submitButton').on('click', function (event) {  //on click of chat submit
         function (errorObject) {  //handle errors
             console.log(errorObject);
         })
-
-
-})
+});
 database.ref('/chat').on('child_added', function (childSnap) { //when message sent to firebase
-    $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>') //apend chat to box
-})
+    $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>');//apend chat to box
+});
 $('clearButton').on('click', function (event) {
     database.ref('/chat').clear();
-})
+});
 
