@@ -55,6 +55,9 @@ public class GameSession : MonoBehaviour
       case 4:
         DealRiver();
         break;
+      case 5:
+        Reset();
+        break;
     }
   }
 
@@ -76,6 +79,17 @@ public class GameSession : MonoBehaviour
   {
     RiverImage.sprite = Resources.Load<Sprite>("Sprites/Cards/6h");
     numCommunityCardsDealt++;
+  }
+
+  private void Reset()
+  {
+    numCommunityCardsDealt = 0;
+    Sprite blank = Resources.Load<Sprite>("Sprites/Cards/blankCard");
+    Flop1Image.sprite = blank;
+    Flop2Image.sprite = blank;
+    Flop3Image.sprite = blank;
+    TurnImage.sprite = blank;
+    RiverImage.sprite = blank;
   }
 
 }
