@@ -324,6 +324,7 @@ function isUserEqual(facebookAuthResponse, firebaseUser) {
 //  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
 //  *    out, and that is where we update the UI.
 //  */
+
 function initApp3() {
     // Listening for auth state changes.
     // [START authstatelistener]
@@ -350,16 +351,17 @@ function initApp3() {
     });
     // [END authstatelistener]
 }
+
 window.onload = function () {
     initApp3();
 }
-FB.init({
-    appId: 2642487855777641,
-    status: true,
-    xfbml: true,
-    version: 'v2.6'
-});
-FB.Event.subscribe('auth.authResponseChange', checkLoginState);
+//FB.init({
+//     appId: 2642487855777641,
+//     status: true,
+//     xfbml: true,
+//     version: 'v2.6'
+// });
+//FB.Event.subscribe('auth.authResponseChange', checkLoginState);
 const config = {
     apiKey: "AIzaSyCw1iDS84Bz7Wk5ifElmdhN1fyQ4LsRALY",
     authDomain: "pokerdata-23592.firebaseapp.com",
@@ -368,6 +370,7 @@ const config = {
     storageBucket: "pokerdata-23592.appspot.com",
     messagingSenderId: "144592076912"
 };
+
 firebase.initializeApp(config);
 const DB = firebase.database();
 const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
@@ -381,6 +384,7 @@ connectedRef.on("value", snapshot => { //assign user IDs  //THIS IS THE MULTIPLA
         connection.onDisconnect().remove();
     }
 });
+
 loggedInRef.on('value', snapshot => {
     if (snapshot.val()) {
         DB.ref('/loggedIn').push({
@@ -389,21 +393,22 @@ loggedInRef.on('value', snapshot => {
         })
     }
 })
-playerRoom.on("value", "THIS IS WHERE SEAT WILL GO", event => {
+playerRoom.ref().on("value", "THIS IS WHERE SEAT WILL GO", event => {
     event.preventDefault();
-    const playerSeat = event.target.seatNumber;
+    //const playerSeat = event.target.seatNumber;
     const player = {
-        playerSeat: `player${playerSeat}`,
+        //  playerSeat: `player${playerSeat}`,
     };
     game.localPlayerSeat = playerSeat;
     playerJoinNumber++
-    // if (event.target.seatNumber === 1) {
-    // playerRoom.ref().push({
-
-    //})
-    //}
+    if (event.target.seatNumber === 1) {
+        playerRoom.ref().push({
+            seatStatus: Dealer, //?
+        })
+    }
     DB.ref(`playerRoom/${game.localID}`).update(player);
 });
+
 function game() {
     function newHand() {
         handDeal(); //uses new deck, deals hands to all connected players
@@ -415,7 +420,9 @@ function game() {
         activePlayers = [];
         const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
         let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
-        shuffledDeck.push(newDeck.splice(cardSelector, 1)); //pushes it to shuffledDeck
+        for (i = 0; i < cardDeck.length; i++) {
+            shuffledDeck.push(newDeck.splice(cardSelector, 1))
+        }; //pushes it to shuffledDeck
         if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
             for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
                 shuffledDeck.push(newDeck.splice(cardSelector, 1));
@@ -460,13 +467,13 @@ function game() {
     };
     function raise() {
         //   if (localId === ) {
-        if (!playerhand === ['']) { //if ya got cards
+        if (this.player.playerSeat === localPlayerSeat === ['']) { //if ya got cards// MAYBE THIS?
             potTotal = potTotal + raiseValue; //add the raised value to the pot
             playerTotal = playerTotal - raiseValue; //grab it out the player val
             currentBet + 4; //add the raise to the call value
             nextTurn(); //switch player turns
-        }
-    }
+        };
+    };
 
     function call() {
         if (this.playerNumber === you) {
@@ -481,10 +488,10 @@ function game() {
     function check() {
         //  if (//whoevers turn in firebase === playerSeat) {
         if (currentBet === 0) { //if no one has bet
-            nextTurn() //trade turns
+            nextTurn(); //trade turns
             //  }
-        }
-    }
+        };
+    };
     function fold() {
         if (game.localId === local.Id) {
             if (!playerhand === ['']) { //if ya got cards
@@ -492,21 +499,21 @@ function game() {
                 nextTurn(); //next turn
                 activePlayer.split(this.localPlayerNumber); //splits player out of active array
             };
-        }
-    }
+        };
+    };
     function blindSwitch() {    //this will just end up as an infinite loop of moving 
         //A LOOP THAT ON NEW DEAL PUSHES DEALER (AND BLINDS) OVER ONE
-    }
+    };
     function newHand() { //a function to set the used deck back to full array and begin the deal function
         //rotates the blinds and dealer down one
         handDeal(); //uses new deck, deals hands to all connected players
         potTotal = 2; //a new pot
         newDeck = [''];
-    }
+    };
     function handCompare() {
         //loop through all possible combos of the 7 available cards
         //pull the highest value and assign it to player in firebase
-    }
+    };
     function victory() {
         //winningPlayer.playerTotal+potTotal
         potTotal = 0
@@ -514,9 +521,11 @@ function game() {
     }
     handDeal();
 }
-game();
-console.log('hello 2')
+console.log(shuffledDeck);
 
+handDeal();
+console.log('hello 2');
+console.log(shuffledDeck);
 //chat function
 //show name function
 $('submitButton').on('click', function (event) {  //on click of chat submit
@@ -529,12 +538,12 @@ $('submitButton').on('click', function (event) {  //on click of chat submit
             console.log(errorObject);
         })
 });
-database.ref('/chat').on('child_added', function (childSnap) { //when message sent to firebase
-    $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>');//apend chat to box
-});
-$('clearButton').on('click', function (event) {
-    database.ref('/chat').clear();
-});
+// database.ref('/chat').on('child_added', function (childSnap) { //when message sent to firebase
+//     $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>');//apend chat to box
+// });
+// $('clearButton').on('click', function (event) {
+//     database.ref('/chat').clear();
+// });
 
 //when they hjoin push them to the active array
 //in the javascript list big blinf small dealer in gamestate on firebase
