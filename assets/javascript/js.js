@@ -390,7 +390,23 @@ FB.Event.subscribe('auth.authResponseChange', checkLoginState);
 // [END facebookauthlistener] diam clu bspa
 // [END_EXCLUDE]
 
-// connectedRef.on('value', snapshot)
+
+
+const config = {
+    apiKey: "AIzaSyCw1iDS84Bz7Wk5ifElmdhN1fyQ4LsRALY",
+    authDomain: "pokerdata-23592.firebaseapp.com",
+    databaseURL: "https://pokerdata-23592.firebaseio.com",
+    projectId: "pokerdata-23592",
+    storageBucket: "pokerdata-23592.appspot.com",
+    messagingSenderId: "144592076912"
+};
+firebase.initializeApp(config);
+const DB = firebase.database();
+const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
+const connectedRef = DB.ref(".info/connected");
+const loggedInRef = DB.ref(".info/loggedIn");
+//number of people connected
+const gameState = DB.ref("gameState");
 connectedRef.on("value", snapshot => { //assign user IDs  //THIS IS THE MULTIPLAYER FUNCTIONALITY
     if (snapshot.val()) {
         const connection = connectionRef.push(true);
@@ -423,23 +439,6 @@ playerRoom.on("value", "THIS IS WHERE SEAT WILL GO", event => {
 
     }
 });
-
-const config = {
-    apiKey: "AIzaSyCw1iDS84Bz7Wk5ifElmdhN1fyQ4LsRALY",
-    authDomain: "pokerdata-23592.firebaseapp.com",
-    databaseURL: "https://pokerdata-23592.firebaseio.com",
-    projectId: "pokerdata-23592",
-    storageBucket: "pokerdata-23592.appspot.com",
-    messagingSenderId: "144592076912"
-};
-firebase.initializeApp(config);
-const DB = firebase.database();
-const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
-const connectedRef = DB.ref(".info/connected");
-const loggedInRef = DB.ref(".info/loggedIn");
-//number of people connected
-const gameState = DB.ref("gameState");
-
 function game() {            //the whole game box, functions first then all the logic yeah?   
 
     //loop to add deal and blinds to first 3 objects in active player array
