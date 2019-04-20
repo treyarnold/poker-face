@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4683814038664759549}
   - component: {fileID: 1030601634871743010}
-  - component: {fileID: 3806804753320812448}
+  - component: {fileID: 7000713714354450078}
   m_Layer: 5
   m_Name: Player Box
   m_TagString: Untagged
@@ -45,7 +45,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4683814038664759538}
   m_CullTransparentMesh: 0
---- !u!114 &3806804753320812448
+--- !u!114 &7000713714354450078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,10 +57,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61e58132240cf649bfb9d9f490d88b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 0}
-  playerFunds: {fileID: 0}
-  currentBet: {fileID: 0}
   emptyChair: {fileID: 4620730237178468074, guid: abbc5ce67747a354797f6d9fbdbe9fef,
-    type: 3}
-  activePlayBox: {fileID: 1729250364749343208, guid: d2df407c4ab9fd241a140ea540490657,
     type: 3}

@@ -2058,11 +2058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61e58132240cf649bfb9d9f490d88b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 0}
-  playerFunds: {fileID: 0}
-  currentBet: {fileID: 0}
-  emptyChair: {fileID: 0}
-  activePlayBox: {fileID: 0}
+  emptyChair: {fileID: 4620730237178468074, guid: abbc5ce67747a354797f6d9fbdbe9fef,
+    type: 3}
 --- !u!4 &1403830941
 Transform:
   m_ObjectHideFlags: 0
