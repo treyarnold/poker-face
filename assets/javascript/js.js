@@ -399,7 +399,7 @@ playerRoom.ref().on("value", "THIS IS WHERE SEAT WILL GO", event => {
     const player = {
         //  playerSeat: `player${playerSeat}`,
     };
-    game.localPlayerSeat = playerSeat;
+    game.localPlayerSeat = playerSeat; //look at this in a sec
     playerJoinNumber++
     if (event.target.seatNumber === 1) {
         playerRoom.ref().push({
