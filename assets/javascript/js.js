@@ -374,6 +374,7 @@ const config = {
 firebase.initializeApp(config);
 const DB = firebase.database();
 const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
+const playerHand = DB.ref("/currentPlayers/currentHand") //soomewhere to hold the players current hand local to machine but on database?
 const connectedRef = DB.ref(".info/connected");
 const loggedInRef = DB.ref(".info/loggedIn");
 const gameState = DB.ref("gameState");
@@ -399,11 +400,21 @@ playerRoom.ref().on("value", "THIS IS WHERE SEAT WILL GO", event => {
     const player = {
         //  playerSeat: `player${playerSeat}`,
     };
-    game.localPlayerSeat = playerSeat; //look at this in a sec
-    playerJoinNumber++
+    game.localPlayerSeat = playerSeat; // this will run every time someone joins the room 
+    playerJoinNumber++              //resetting the rotation however, need something to prevent this
     if (event.target.seatNumber === 1) {
         playerRoom.ref().push({
             seatStatus: Dealer, //?
+        })
+    }
+    if (event.target.seatNumber === 2) {
+        playerRoom.ref().push({
+            seatStatus: smallBlind
+        })
+    }
+    if (event.target.seatNumber === 3) {
+        playerRoom.ref().push({
+            seatStatus: bigBlind
         })
     }
     DB.ref(`playerRoom/${game.localID}`).update(player);
@@ -423,12 +434,12 @@ function game() {
         for (i = 0; i < cardDeck.length; i++) {
             shuffledDeck.push(newDeck.splice(cardSelector, 1))
         }; //pushes it to shuffledDeck
-        if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player
-            for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
-                shuffledDeck.push(newDeck.splice(cardSelector, 1));
-            playerhand[i].push(newDeck.splice(cardSelector, 1));   //how to loop through players?? //FOR CLASS 
+        // if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player |dont think this is necessary bc length of forloop
+        for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
+            shuffledDeck.push(newDeck.splice(cardSelector, 1));
+        this.player.playerSeat.playerHand.push(newDeck.splice(cardSelector, 1));   //how to loop through players?? //FOR CLASS 
 
-        }
+        // }
         blindSwitch();
         player.smallblind.potTotal - 2;
         potTotal = potTotal + 2;
@@ -495,7 +506,7 @@ function game() {
     function fold() {
         if (game.localId === local.Id) {
             if (!playerhand === ['']) { //if ya got cards
-                playerhand = ['']; //now ya don't
+                this.player.playerSeat.playerhand = ['']; //now ya don't
                 nextTurn(); //next turn
                 activePlayer.split(this.localPlayerNumber); //splits player out of active array
             };
@@ -503,6 +514,20 @@ function game() {
     };
     function blindSwitch() {    //this will just end up as an infinite loop of moving 
         //A LOOP THAT ON NEW DEAL PUSHES DEALER (AND BLINDS) OVER ONE
+        if (this.player.playerSeat.seatStatus === Dealer) {
+            playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+            //UHhhhhhhh?
+        }
+        if (this.player.playerSeat.seatStatus === smallBlind) {
+            playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+            DB.ref().push({
+                this.player.playerSeat.playerStatus: smallBlind, //ummmmm find the next person over make small blind
+            })
+        }
+        if (this.player.playerSeat.seatStatus === bigBlind) {
+            playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+            //locate the next person over and make them big blind
+        }
     };
     function newHand() { //a function to set the used deck back to full array and begin the deal function
         //rotates the blinds and dealer down one
@@ -513,9 +538,10 @@ function game() {
     function handCompare() {
         //loop through all possible combos of the 7 available cards
         //pull the highest value and assign it to player in firebase
-        tableCards.join(this.player.playerSeat.playerHand)   //now need a playerhand database push when cards dealt
+        let handTotal = tableCards.join(this.player.playerSeat.playerHand)   //now need a playerhand database push when cards dealt
         for (i = 0; i < 7; i++) {
             //conditionals to determine highest available hand value
+            if (handTotal[i] in handTotal)
         }
     };
     function victory() {
