@@ -423,12 +423,44 @@ playerRoom.ref().on("value", "THIS IS WHERE SEAT WILL GO", event => {
 function game() {
     function newHand() {
         handDeal(); //uses new deck, deals hands to all connected players
+        activePlayers = [];
+        ActivePlayerArray.push(everybody) //?
+        // const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
+        // let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
+        // for (i = 0; i < cardDeck.length; i++) {
+        //     shuffledDeck.push(newDeck.splice(cardSelector, 1))
+        // }; //pushes it to shuffledDeck
+        // // if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player |dont think this is necessary bc length of forloop
+        // for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
+        //     shuffledDeck.push(newDeck.splice(cardSelector, 1));
+        // this.player.playerSeat.playerHand.push(newDeck.splice(cardSelector, 1));   //how to loop through players?? //FOR CLASS 
+
+        // // }
+        // blindSwitch();
+        //     if (this.player.playerSeat.seatStatus === Dealer) {
+        //         playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //         //UHhhhhhhh?
+        //     }
+        //     if (this.player.playerSeat.seatStatus === smallBlind) {
+        //         playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //         DB.ref().push({
+        //             this.player.playerSeat.playerStatus: smallBlind, // find the next person over make small blind
+        //         })
+        //     }
+        //     if (this.player.playerSeat.seatStatus === bigBlind) {
+        //         playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //         //locate the next person over and make them big blind
+        //     }
+        // };
+        // player.smallblind.potTotal - 2;
+        // potTotal = potTotal + 2;
         potTotal = 2; //a new pot
         newDeck = [''];
     }
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
         activePlayers = [];
+        ActivePlayerArray.push(everybody) //?
         const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
         let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
         for (i = 0; i < cardDeck.length; i++) {
@@ -441,6 +473,21 @@ function game() {
 
         // }
         blindSwitch();
+        //     if (this.player.playerSeat.seatStatus === Dealer) {
+        //         playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //         //UHhhhhhhh?
+        //     }
+        //     if (this.player.playerSeat.seatStatus === smallBlind) {
+        //         playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //         DB.ref().push({
+        //             this.player.playerSeat.playerStatus: smallBlind, // find the next person over make small blind
+        //         })
+        //     }
+        //     if (this.player.playerSeat.seatStatus === bigBlind) {
+        //         playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //         //locate the next person over and make them big blind
+        //     }
+        // };
         player.smallblind.potTotal - 2;
         potTotal = potTotal + 2;
     }
@@ -463,7 +510,7 @@ function game() {
 
     }
     function bet() {
-        if (this.playerNumber === you) {               //Available move functions
+        if (this.player.playerSeat === localPlayerSeat) {               //Available move functions
             if (!playerhand === ['']) { //if playerfromfirebase = your player           //gamestate on value change for whos turn it is that gets updated for current turn = firebase info could also move down array
                 if (currentBet === 0) {   //if the current bet is 0 (no one has bet yet)
                     currentBet === 4        //set the current bet to 4 
@@ -487,7 +534,7 @@ function game() {
     };
 
     function call() {
-        if (this.playerNumber === you) {
+        (this.player.playerSeat === localPlayerSeat){
             if (!playerhand === [''] & (!currentBet === 0)) { //if ya got cards, someone bet -
                 potTotal = currentBet + potTotal; //add the current bet to pot
                 playerTotal = playerTotal - currentBet; //grab it out the hand
@@ -497,14 +544,15 @@ function game() {
         };
     };
     function check() {
-        //  if (//whoevers turn in firebase === playerSeat) {
-        if (currentBet === 0) { //if no one has bet
-            nextTurn(); //trade turns
-            //  }
+        if (this.player.playerSeat === localPlayerSeat) {
+            if (currentBet === 0) { //if no one has bet
+                nextTurn(); //trade turns
+                //  }
+            };
         };
-    };
+    }
     function fold() {
-        if (game.localId === local.Id) {
+        if (this.player.playerSeat === localPlayerSeat) {
             if (!playerhand === ['']) { //if ya got cards
                 this.player.playerSeat.playerhand = ['']; //now ya don't
                 nextTurn(); //next turn
@@ -521,7 +569,7 @@ function game() {
         if (this.player.playerSeat.seatStatus === smallBlind) {
             playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
             DB.ref().push({
-                this.player.playerSeat.playerStatus: smallBlind, //ummmmm find the next person over make small blind
+                this.player.playerSeat.playerStatus: smallBlind, // find the next person over make small blind
             })
         }
         if (this.player.playerSeat.seatStatus === bigBlind) {
@@ -541,8 +589,8 @@ function game() {
         let handTotal = tableCards.join(this.player.playerSeat.playerHand)   //now need a playerhand database push when cards dealt
         for (i = 0; i < 7; i++) {
             //conditionals to determine highest available hand value
-            if (handTotal[i] in handTotal)
-        }
+            if handTotal.indexOf('c') //hand total wil llook like 
+        }                                   //['ac', 3d', '2c', 'kc', '5c', '7h', '8c',]
     };
     function victory() {
         //winningPlayer.playerTotal+potTotal
@@ -568,12 +616,12 @@ $('submitButton').on('click', function (event) {  //on click of chat submit
             console.log(errorObject);
         })
 });
-// database.ref('/chat').on('child_added', function (childSnap) { //when message sent to firebase
-//     $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>');//apend chat to box
-// });
-// $('clearButton').on('click', function (event) {
-//     database.ref('/chat').clear();
-// });
+database.ref('/chat').on('child_added', function (childSnap) { //when message sent to firebase
+    $('#chatDiv').append('<p>' + currentPlayer + 'says: ' + childSnap.val().newTextMessage + '</p>');//apend chat to box
+});
+$('clearButton').on('click', function (event) {
+    database.ref('/chat').clear();
+});
 
 //when they hjoin push them to the active array
 //in the javascript list big blinf small dealer in gamestate on firebase
