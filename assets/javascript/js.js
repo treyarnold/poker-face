@@ -513,6 +513,10 @@ function game() {
     function handCompare() {
         //loop through all possible combos of the 7 available cards
         //pull the highest value and assign it to player in firebase
+        tableCards.join(this.player.playerSeat.playerHand)   //now need a playerhand database push when cards dealt
+        for (i = 0; i < 7; i++) {
+            //conditionals to determine highest available hand value
+        }
     };
     function victory() {
         //winningPlayer.playerTotal+potTotal
