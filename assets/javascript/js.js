@@ -420,52 +420,53 @@ playerRoom.ref().on("value", "THIS IS WHERE SEAT WILL GO", event => {
     DB.ref(`playerRoom/${game.localID}`).update(player);
 });
 
-function game() {
-    function newHand() {
-        handDeal(); //uses new deck, deals hands to all connected players
-        activePlayers = [];
-        ActivePlayerArray.push(everybody) //?
+function newHand() {
+    handDeal(); //uses new deck, deals hands to all connected players
+    activePlayers = [];
+    ActivePlayerArray.push(everybody) //?
 
-        potTotal = 2; //a new pot
-        newDeck = [''];
+    potTotal = 2; //a new pot
+    newDeck = [''];
+}
+function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
+    //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
+    activePlayers = playerRoom;
+    ActivePlayerArray.push(this.player.playerSeat) //?
+    const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
+    let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
+    for (i = 0; i < cardDeck.length; i++) {
+        shuffledDeck.push(newDeck.splice(cardSelector, 1))
+    }; //pushes it to shuffledDeck
+    // if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player |dont think this is necessary bc length of forloop
+    for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
+        shuffledDeck.push(newDeck.splice(cardSelector, 1));
+    this.player.playerSeat.playerHand.push(newDeck.splice(cardSelector, 1));  //how to loop through players?? //FOR CLASS 
+    playerRoom.ref().push({
+        potTotal: 2,
+    })
+
+    // }
+    blindSwitch();
+    if (this.player.playerSeat.seatStatus === Dealer) {
+        playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //UHhhhhhhh?
     }
-    function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
-        //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
-        activePlayers = playerRoom;
-        ActivePlayerArray.push(this.player.playerSeat) //?
-        const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
-        let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
-        for (i = 0; i < cardDeck.length; i++) {
-            shuffledDeck.push(newDeck.splice(cardSelector, 1))
-        }; //pushes it to shuffledDeck
-        // if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player |dont think this is necessary bc length of forloop
-        for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
-            shuffledDeck.push(newDeck.splice(cardSelector, 1));
-        this.player.playerSeat.playerHand.push(newDeck.splice(cardSelector, 1));  //how to loop through players?? //FOR CLASS 
-        playerRoom.ref().push({
-            potTotal: 2,
+    if (this.player.playerSeat.seatStatus === smallBlind) {
+        playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        DB.ref().push({
+            this.player.playerSeat.playerStatus: smallBlind, // find the next person over make small blind
         })
-
-        // }
-        blindSwitch();
-        if (this.player.playerSeat.seatStatus === Dealer) {
-            playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
-            //UHhhhhhhh?
-        }
-        if (this.player.playerSeat.seatStatus === smallBlind) {
-            playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
-            DB.ref().push({
-                this.player.playerSeat.playerStatus: smallBlind, // find the next person over make small blind
-            })
-        }
-        if (this.player.playerSeat.seatStatus === bigBlind) {
-            playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
-            //locate the next person over and make them big blind
-        }
-    };
+    }
+    if (this.player.playerSeat.seatStatus === bigBlind) {
+        playerArray[this.player.pleayerSeat + 1] //this is seperate from activePlayerArray which determines who remains in the hand
+        //locate the next person over and make them big blind
+    }
     player.smallblind.potTotal - 2;
     potTotal = potTotal + 2;
-}
+
+};
+
+
 function turnDeal() { //the new deal for the hand
     dealCount++
     if (dealCount === 1) {
@@ -586,7 +587,7 @@ function victory() {
     newHand();
 }
 handDeal();
-}
+
 console.log(shuffledDeck);
 
 handDeal();
