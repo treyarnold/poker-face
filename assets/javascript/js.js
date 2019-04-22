@@ -373,8 +373,8 @@ const config = {
 
 firebase.initializeApp(config);
 const DB = firebase.database();
-const PlayerRoom = DB.ref("/currentPlayers") //a sub directory with current players
-const playerHand = DB.ref("/currentPlayers/currentHand") //soomewhere to hold the players current hand local to machine but on database?
+const playerRoom = DB.ref("/currentPlayers") //a sub directory with current players
+// const playerHand = DB.ref("/currentPlayers/currentHand") //unnecessary bc the hand will be stored as part of object? //soomewhere to hold the players current hand local to machine but on database?
 const connectedRef = DB.ref(".info/connected");
 const loggedInRef = DB.ref(".info/loggedIn");
 const gameState = DB.ref("gameState");
@@ -459,8 +459,8 @@ function game() {
     }
     function handDeal() {    //the array for playerHand. >>How will it know which player hand to sort too? possible to make a variable with like an [i] item so it can sort through?
         //or a function to create player hand arrays based on log in connections, through a loop probably, and then a loop to deal the cards as well?
-        activePlayers = [];
-        ActivePlayerArray.push(everybody) //?
+        activePlayers = playerRoom;
+        ActivePlayerArray.push(this.player.playerSeat) //?
         const newDeck = [...cardDeck];  //uses the card deck, but in a way where we can mess with it 
         let cardSelector = (Math.floor(0 - newDeck.length) + 1); //picks a random card out of the deck
         for (i = 0; i < cardDeck.length; i++) {
@@ -469,7 +469,10 @@ function game() {
         // if (!(playerNumber * 2) === playercardNumbers) { //if there are not  two cards dealt for every player |dont think this is necessary bc length of forloop
         for (i = 0; i <= (playerNumber * 2); i++) // a loop to run for every player x2
             shuffledDeck.push(newDeck.splice(cardSelector, 1));
-        this.player.playerSeat.playerHand.push(newDeck.splice(cardSelector, 1));   //how to loop through players?? //FOR CLASS 
+        this.player.playerSeat.playerHand.push(newDeck.splice(cardSelector, 1));  //how to loop through players?? //FOR CLASS 
+        playerRoom.ref().push({
+            potTotal: 2,
+        })
 
         // }
         blindSwitch();
@@ -502,6 +505,7 @@ function game() {
             shuffledDeck.splice(0, 1);
         }
         drawFunctionCount++ //used by the handselect function to count how many deals have gone out, at 3 is a requirement for the on card click function to activate
+
     }
     function nextTurn() {
         if (callCount === activePlayer.length) {
@@ -539,6 +543,10 @@ function game() {
                 potTotal = currentBet + potTotal; //add the current bet to pot
                 playerTotal = playerTotal - currentBet; //grab it out the hand
                 callCount++ //this variable is used to determine when the next draw function should occur, when callCount === playerNumber
+                playerRoom.ref().push({
+                    //this.player.playerTotal: playerTotal,
+                    potTotal: potTotal,
+                })
                 nextTurn(); //nex tturn
             };
         };
@@ -556,7 +564,7 @@ function game() {
             if (!playerhand === ['']) { //if ya got cards
                 this.player.playerSeat.playerhand = ['']; //now ya don't
                 nextTurn(); //next turn
-                activePlayer.split(this.localPlayerNumber); //splits player out of active array
+                activePlayer.split(this.player); //splits player out of active array
             };
         };
     };
