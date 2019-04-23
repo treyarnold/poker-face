@@ -10,6 +10,8 @@ public class GameSession : MonoBehaviour
   [SerializeField] Image Flop3Image;
   [SerializeField] Image TurnImage;
   [SerializeField] Image RiverImage;
+  [SerializeField] AudioClip[] cardSounds;
+  [SerializeField] Sprite[] cardImages;
 
   int numCardsDealt;
   int numCommunityCardsDealt;
@@ -35,6 +37,7 @@ public class GameSession : MonoBehaviour
   public void FoldButtonPressed()
   {
     Debug.Log("Fold");
+    GetComponent<AudioSource>().PlayOneShot(cardSounds[Random.Range(0, cardSounds.Length)]);
   }
 
   public void RaiseButtonPressed()
@@ -63,21 +66,26 @@ public class GameSession : MonoBehaviour
 
   private void DealFlop()
   {
-    Flop1Image.sprite = Resources.Load<Sprite>("Sprites/Cards/4h");
-    Flop2Image.sprite = Resources.Load<Sprite>("Sprites/Cards/3h");
-    Flop3Image.sprite = Resources.Load<Sprite>("Sprites/Cards/2h");
+    Flop1Image.sprite = cardImages[Random.Range(0, cardImages.Length)];
+    GetComponent<AudioSource>().PlayOneShot(cardSounds[Random.Range(0, cardSounds.Length)]);
+    Flop2Image.sprite = cardImages[Random.Range(0, cardImages.Length)];
+    GetComponent<AudioSource>().PlayOneShot(cardSounds[Random.Range(0, cardSounds.Length)]);
+    Flop3Image.sprite = cardImages[Random.Range(0, cardImages.Length)];
+    GetComponent<AudioSource>().PlayOneShot(cardSounds[Random.Range(0, cardSounds.Length)]);
     numCommunityCardsDealt = 3;
   }
 
   private void DealTurn()
   {
-    TurnImage.sprite = Resources.Load<Sprite>("Sprites/Cards/5h");
+    TurnImage.sprite = cardImages[Random.Range(0, cardImages.Length)];
+    GetComponent<AudioSource>().PlayOneShot(cardSounds[Random.Range(0, cardSounds.Length)]);
     numCommunityCardsDealt++;
   }
 
   private void DealRiver()
   {
-    RiverImage.sprite = Resources.Load<Sprite>("Sprites/Cards/6h");
+    RiverImage.sprite = cardImages[Random.Range(0, cardImages.Length)];
+    GetComponent<AudioSource>().PlayOneShot(cardSounds[Random.Range(0, cardSounds.Length)]);
     numCommunityCardsDealt++;
   }
 
