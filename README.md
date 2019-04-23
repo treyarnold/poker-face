@@ -1,6 +1,6 @@
 # Name of Project
 
-> [Live Site](Put the deployed link here once you have it)
+> [Live Site](Put the deployed link here once you have it).
 
 ## Project Summary
 
