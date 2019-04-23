@@ -11,6 +11,7 @@ public class GameSession : MonoBehaviour
   [SerializeField] Image TurnImage;
   [SerializeField] Image RiverImage;
   [SerializeField] AudioClip[] cardSounds;
+  [SerializeField] AudioClip[] chipSounds;
   [SerializeField] Sprite[] cardImages;
 
   int numCardsDealt;
@@ -32,6 +33,7 @@ public class GameSession : MonoBehaviour
   public void CallButtonPressed()
   {
     Debug.Log("Call");
+    GetComponent<AudioSource>().PlayOneShot(chipSounds[Random.Range(0, chipSounds.Length)]);
   }
   
   public void FoldButtonPressed()
@@ -43,6 +45,7 @@ public class GameSession : MonoBehaviour
   public void RaiseButtonPressed()
   {
     Debug.Log("Raise");
+    GetComponent<AudioSource>().PlayOneShot(chipSounds[Random.Range(0, chipSounds.Length)]);
   }
 
   public void DealButtonPressed()

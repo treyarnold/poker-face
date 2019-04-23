@@ -2824,6 +2824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960419557}
   - component: {fileID: 1960419556}
+  - component: {fileID: 1960419558}
   m_Layer: 0
   m_Name: Game Session
   m_TagString: Untagged
@@ -2848,6 +2849,77 @@ MonoBehaviour:
   Flop3Image: {fileID: 1373386961}
   TurnImage: {fileID: 567418598}
   RiverImage: {fileID: 784807733}
+  cardSounds:
+  - {fileID: 8300000, guid: de0c52f17b408d446bce9555ae84ee34, type: 3}
+  - {fileID: 8300000, guid: 2dad8052eef2b5c478d54ae57ef4c08a, type: 3}
+  - {fileID: 8300000, guid: 412d8afc828182443a3e5f84e67edb32, type: 3}
+  - {fileID: 8300000, guid: 2298e28b73d9a5b459c6f9461eb19851, type: 3}
+  - {fileID: 8300000, guid: ac1c10adecfcb9242b0cfa5898e768c7, type: 3}
+  - {fileID: 8300000, guid: 516bf06a903ebda48ab811eb74b18534, type: 3}
+  - {fileID: 8300000, guid: 8221e67bedc637d46b1ba87430c177ac, type: 3}
+  - {fileID: 8300000, guid: fe44a32ebd8d39b4d9456b32683e89a7, type: 3}
+  chipSounds:
+  - {fileID: 8300000, guid: 9f1f37735305c4cc99b07c19fe48675d, type: 3}
+  - {fileID: 8300000, guid: d0440e1e7ebf542a1884646f52220a69, type: 3}
+  - {fileID: 8300000, guid: 4bae819a7a1fb43dbaa5ecf65df5b7bc, type: 3}
+  - {fileID: 8300000, guid: fb1943d1a7fb14c4a83617b1e8cc8e16, type: 3}
+  - {fileID: 8300000, guid: b72d3026305554cdab9d02fe53284de5, type: 3}
+  - {fileID: 8300000, guid: 71f5cfbe2855d49fc9fda59bb4d1c2c1, type: 3}
+  - {fileID: 8300000, guid: a04591ccf46144804bc251c9763df04f, type: 3}
+  - {fileID: 8300000, guid: 0d7d8448b8e094bb3bc676cba5037c68, type: 3}
+  cardImages:
+  - {fileID: 21300000, guid: df3e4a6f07037b5469d10d3efd04a7d9, type: 3}
+  - {fileID: 21300000, guid: b7391a2eb1a47754eb9b782d6a4aaa96, type: 3}
+  - {fileID: 21300000, guid: 87a82c6a715f1674e918867becdbaf46, type: 3}
+  - {fileID: 21300000, guid: 1f1325b6f62c6c84d8b032bde3746a88, type: 3}
+  - {fileID: 21300000, guid: 7ed9a85d84b783340b537c4effdcc155, type: 3}
+  - {fileID: 21300000, guid: 62fe0a49ea3f7ed428e44604293ea943, type: 3}
+  - {fileID: 21300000, guid: 077f4bd133985e4498c381e0b790fb65, type: 3}
+  - {fileID: 21300000, guid: f8598277cabbf2442b1bb6955dffb19e, type: 3}
+  - {fileID: 21300000, guid: b2eb81e7dc7bbfb40b2a5314bbd44509, type: 3}
+  - {fileID: 21300000, guid: 1dc886bcca317304692f8ef38c8a8db4, type: 3}
+  - {fileID: 21300000, guid: e7e32a8e21fa9ba4a93bbb15ab41a940, type: 3}
+  - {fileID: 21300000, guid: b2f1a6b338ae28f47b683e20a78ff54c, type: 3}
+  - {fileID: 21300000, guid: 71163922130d1dd4b8e3c8235a52d61d, type: 3}
+  - {fileID: 21300000, guid: ff357e5351a89714daef0fb710c9377f, type: 3}
+  - {fileID: 21300000, guid: f8ec86236798cf848bc065ee81429d57, type: 3}
+  - {fileID: 21300000, guid: 609e36d9c84ea65478c5046481b04690, type: 3}
+  - {fileID: 21300000, guid: 7979499810c89754b9777ab5276a7812, type: 3}
+  - {fileID: 21300000, guid: 47f07aaea7db05249b8cdf766b21f2ee, type: 3}
+  - {fileID: 21300000, guid: 28e60ef9f949ab549ab61f37e399e504, type: 3}
+  - {fileID: 21300000, guid: 06cc91a735831ba439e8d27bbb41af02, type: 3}
+  - {fileID: 21300000, guid: 51e796b2d50a19b468b9199a0c4e6c38, type: 3}
+  - {fileID: 21300000, guid: e729d0e2a897f4a4eb650466f93f41b2, type: 3}
+  - {fileID: 21300000, guid: f37f5ebe54b32394098c2340dba10c29, type: 3}
+  - {fileID: 21300000, guid: 53547414f0f97274fa8b1c7212460399, type: 3}
+  - {fileID: 21300000, guid: 9a1c2e40954072b4b9a4eaf768f2a345, type: 3}
+  - {fileID: 21300000, guid: bb6d23e561b85fd48b208bc0be76f772, type: 3}
+  - {fileID: 21300000, guid: 8b1a4eea5107c81428a8d536c8294dad, type: 3}
+  - {fileID: 21300000, guid: d964f4ec2a15d9d4a8d0664f23a495e6, type: 3}
+  - {fileID: 21300000, guid: 597915065908c7d4fa70ae6e96fe6bc1, type: 3}
+  - {fileID: 21300000, guid: a556f524448794045ba5f9f05b88eee0, type: 3}
+  - {fileID: 21300000, guid: 436b07ddf4be98046be93784b0793373, type: 3}
+  - {fileID: 21300000, guid: 37391102561afb04da1d88970eeb1438, type: 3}
+  - {fileID: 21300000, guid: d38b27c6624720d46b07d6f40b781ce4, type: 3}
+  - {fileID: 21300000, guid: 025701ec9437b534e98317de6ed66065, type: 3}
+  - {fileID: 21300000, guid: d27846827307aa042883ad2e3b185aef, type: 3}
+  - {fileID: 21300000, guid: f0668c1960ce19b4f8d1975fd99ab2f7, type: 3}
+  - {fileID: 21300000, guid: cac8f0f31d1d555409a2aa87171a2977, type: 3}
+  - {fileID: 21300000, guid: 22c048e60007f574cb9c78eb1b9fd00b, type: 3}
+  - {fileID: 21300000, guid: 20480e6acda062e4f80fdafe363ecce2, type: 3}
+  - {fileID: 21300000, guid: a97db888965d135439c54e461dc02387, type: 3}
+  - {fileID: 21300000, guid: 169121c6fa4fd754eb0264b4767e8b2c, type: 3}
+  - {fileID: 21300000, guid: da6913040314a7e479bbec5a1da497a1, type: 3}
+  - {fileID: 21300000, guid: 5f58e370abb59ef4cba6cc20361eda77, type: 3}
+  - {fileID: 21300000, guid: 9c2c69cf9286b8449bdc854593ad42b9, type: 3}
+  - {fileID: 21300000, guid: 785d154f5dd73304eaeba7a45c35e019, type: 3}
+  - {fileID: 21300000, guid: c6d60fae40de2e14bb9dd6d80895cb57, type: 3}
+  - {fileID: 21300000, guid: 916e5a47cddc34744a4fa64fb4696d6a, type: 3}
+  - {fileID: 21300000, guid: 1f5834a98dab30d479cf9ffbdba713c8, type: 3}
+  - {fileID: 21300000, guid: 89daf2d4ccae27444812b87d5900a072, type: 3}
+  - {fileID: 21300000, guid: 861d591b98f24b14ca62eeaffcc84b7b, type: 3}
+  - {fileID: 21300000, guid: 231f62c35e861ff458f9d62464c24a87, type: 3}
+  - {fileID: 21300000, guid: a22a946b98e820f489817be5b6b0790d, type: 3}
 --- !u!4 &1960419557
 Transform:
   m_ObjectHideFlags: 0
@@ -2862,6 +2934,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1960419558
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960419555}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &2006621561 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6264364077752143132, guid: ed770576618802442adac84606cc55c0,
