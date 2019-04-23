@@ -631,4 +631,4 @@ $('clearButton').on('click', function (event) {
 })
 
 //array of active players that contains everyone on first hand
-next turn function , moves down the array
+// next turn function , moves down the array
