@@ -1,6 +1,6 @@
-# Name of Project
+# Poker Face
 
-> [Live Site](Put the deployed link here once you have it).
+> [Delpoyed Poker Site](https://treyarnold.github.io/Poker-Face/).
 
 ## Project Summary
 
