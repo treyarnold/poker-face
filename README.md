@@ -1,6 +1,6 @@
 # Poker Face
 
-> [Deployed Poker Site](https://treyarnold.github.io/Poker-Face/).
+> [Deployed Poker Site](https://treyarnold.github.io/poker-face/).
 
 ## Project Summary
 
