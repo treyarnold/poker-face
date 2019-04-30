@@ -1,6 +1,6 @@
 # Poker Face
 
-> [Delpoyed Poker Site](https://treyarnold.github.io/Poker-Face/).
+> [Deployed Poker Site](https://treyarnold.github.io/Poker-Face/).
 
 ## Project Summary
 
@@ -19,17 +19,17 @@
 
 ## Animated Gifs/Pictures of App
 
-- Place various screens of your app here after they have been built
+![alt text](https://media.giphy.com/media/gIAh11mlYJa4jEeFga/giphy.gif)
 
 ## Tech Stack
 
-- HTML5, CSS3, JavaScript, Git, Firebase
+- C#, Unity, HTML5, CSS3, JavaScript, Git, Firebase
 - Bootstrap4, jQuery
 
 ## APIs
 
-- Unsplash
-- WebGL, or unreal, or Unity
+- WebGL
+- Web Audio
 
 ## MVP
 
@@ -48,9 +48,10 @@
 
 ## Future Development
 
-- Whats been tabled
-- Update this after the project has been completed
+- Rework the backend to work with the Firebase API and Unity assets in order to work in the realtime database
+- Once interactivity is established, track players bets and add a slider for controlling the amount to bet
+- Display chat and login functionalities 
 
 ## Credits/Resources
 
-- Any credits you should list to resources you used
+- [2D Unity and C# Udemy course](https://www.udemy.com/unitycourse/) by [gamedev.tv](https://www.gamedev.tv/)
