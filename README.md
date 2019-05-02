@@ -5,7 +5,7 @@
 ## Project Summary
 
 > To create a multiplayer-functional application that allows users to play texas holdem and chat in real time from the safety of their own laptop. 
-> The unity build is done using WebGL and the sprites were created on [Pixil Art](https://www.pixilart.com/moadeep)
+> The unity build is done using WebGL and the sprites were created on [Pixil Art](https://www.pixilart.com/moadeep). 
 > To see the Unity build in the Unity UI, Use Unity 2018.3.12f and open the project folder inside the unityWorkingFolder
 
 ## Developers
